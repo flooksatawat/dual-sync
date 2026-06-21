@@ -53,6 +53,8 @@
     .action{padding:12px 16px;border-radius:999px;background:linear-gradient(135deg,rgba(56,189,248,.9),rgba(52,211,153,.8));color:#06111f;font-weight:700}
     .action.secondary{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--border)}
     .task-btn{width:100%;text-align:left;padding:14px 15px;border-radius:18px;background:rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--text)}
+    .item-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+    .tiny-btn{padding:8px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);cursor:pointer;font-size:12px}
     .task-btn:hover,.nav button:hover,.action:hover,.chip-link:hover{transform:translateY(-1px)}
     .chip-link{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--text);text-decoration:none}
     .section-view{display:none}
@@ -85,6 +87,7 @@
         <div class="pill">✨ Dual Sync</div>
         <div class="sub">เก็บลิงก์ รูป ไฟล์ สถานะงาน และสิ่งที่ต้องเรียนรู้ไว้ในที่เดียว พร้อมออกแบบให้ใช้งานได้ดีทั้งมือถือและคอมพิวเตอร์</div>
         <div class="toolbar">
+          <button class="action" id="createTask">เพิ่มงาน</button>
           <button class="action secondary" id="addDriveLink">เพิ่มลิงก์ Drive</button>
           <label class="action secondary" for="uploadImage" style="display:inline-flex;align-items:center">อัปโหลดรูป</label>
           <input id="uploadImage" type="file" accept="image/*" hidden>
@@ -118,21 +121,35 @@
             <div class="card" style="padding:16px;background:rgba(56,189,248,.08)"><div style="display:flex;justify-content:space-between"><span>ทำแล้ว</span><span>7</span></div><div class="progress"><div class="bar work" style="width:70%"></div></div></div>
             <div class="card" style="padding:16px;background:rgba(217,70,239,.08)"><div style="display:flex;justify-content:space-between"><span>เหลือ</span><span>3</span></div><div class="progress"><div class="bar learn" style="width:20%"></div></div></div>
           </div>
-          <button class="task-btn" data-task="วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน"><span>วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</span><span>user1</span></button>
-          <button class="task-btn" data-task="ออกแบบหน้า Home สำหรับมือถือ"><span>ออกแบบหน้า Home สำหรับมือถือ</span><span>user2</span></button>
-          <button class="task-btn" data-task="ทบทวน Google Drive structure"><span>ทบทวน Google Drive structure</span><span>user1</span></button>
+          <button class="task-btn" data-task-id="task-1" data-task="วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน"><span>วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</span><span>user1</span></button>
+          <div class="item-actions">
+            <button class="tiny-btn" data-edit-task="task-1">แก้ไข</button>
+            <button class="tiny-btn" data-delete-task="task-1">ลบ</button>
+          </div>
+          <button class="task-btn" data-task-id="task-2" data-task="ออกแบบหน้า Home สำหรับมือถือ"><span>ออกแบบหน้า Home สำหรับมือถือ</span><span>user2</span></button>
+          <div class="item-actions">
+            <button class="tiny-btn" data-edit-task="task-2">แก้ไข</button>
+            <button class="tiny-btn" data-delete-task="task-2">ลบ</button>
+          </div>
+          <button class="task-btn" data-task-id="task-3" data-task="ทบทวน Google Drive structure"><span>ทบทวน Google Drive structure</span><span>user1</span></button>
+          <div class="item-actions">
+            <button class="tiny-btn" data-edit-task="task-3">แก้ไข</button>
+            <button class="tiny-btn" data-delete-task="task-3">ลบ</button>
+          </div>
         </div>
         <div class="card panel">
           <div style="font-size:22px;font-weight:700">โครงสร้างการใช้งานจริง</div>
-          <div class="card-item"><b>Google Drive</b><div style="color:var(--muted);margin-top:8px">ใช้เป็นแหล่งเก็บกลางสำหรับงาน เรียนรู้ และคลังอ้างอิง</div><a class="chip-link" href="https://drive.google.com/drive/folders/1654EojpqzT_fXctvJ9zKfsZkKbsCU9Y7?usp=drive_link" target="_blank" rel="noreferrer">เปิด Drive</a></div>
+          <div class="card-item"><b>Google Drive</b><div style="color:var(--muted);margin-top:8px">ใช้เป็นแหล่งเก็บกลางสำหรับงาน เรียนรู้ และคลังอ้างอิง</div><a class="chip-link" href="https://drive.google.com/drive/folders/1654EojpqzT_fXctvJ9zKfsZkKbsCU9Y7?usp=drive_link" target="_blank" rel="noreferrer">เปิด Drive</a>
+            <div class="item-actions"><button class="tiny-btn" data-edit-link="drive">แก้ไขลิงก์</button><button class="tiny-btn" data-delete-link="drive">ลบลิงก์</button></div>
+          </div>
           <div class="card-item"><b>LINE</b><div style="color:var(--muted);margin-top:8px">ส่งสถานะสำคัญ เช่น เสร็จงาน เพิ่มลิงก์ใหม่ และสรุปรายวัน</div><button class="action secondary" id="lineDemo">ทดสอบส่งข้อความ</button></div>
           <div class="card-item"><b>Responsive</b><div style="color:var(--muted);margin-top:8px">Mobile-first, กดง่าย, อ่านชัด, ใช้ได้ทั้ง Windows และ Mac</div></div>
         </div>
       </section>
       <section class="layout3 section-view" id="learn">
-        <div class="card board"><div class="status"><span>งาน • todo</span><span>2</span></div><button class="task-btn" data-task="เตรียม milestone รอบแรก"><span>เตรียม milestone รอบแรก</span><span>user1</span></button></div>
-        <div class="card board"><div class="status"><span>งาน • doing</span><span>1</span></div><button class="task-btn" data-task="ออกแบบหน้า Home สำหรับมือถือ"><span>ออกแบบหน้า Home สำหรับมือถือ</span><span>user2</span></button></div>
-        <div class="card board"><div class="status"><span>งาน • done</span><span>1</span></div><button class="task-btn" data-task="วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน"><span>วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</span><span>user1</span></button></div>
+        <div class="card board"><div class="status"><span>งาน • todo</span><span>2</span></div><button class="task-btn" data-task-id="learn-1" data-task="เตรียม milestone รอบแรก"><span>เตรียม milestone รอบแรก</span><span>user1</span></button><div class="item-actions"><button class="tiny-btn" data-edit-task="learn-1">แก้ไข</button><button class="tiny-btn" data-delete-task="learn-1">ลบ</button></div></div>
+        <div class="card board"><div class="status"><span>งาน • doing</span><span>1</span></div><button class="task-btn" data-task-id="learn-2" data-task="ออกแบบหน้า Home สำหรับมือถือ"><span>ออกแบบหน้า Home สำหรับมือถือ</span><span>user2</span></button><div class="item-actions"><button class="tiny-btn" data-edit-task="learn-2">แก้ไข</button><button class="tiny-btn" data-delete-task="learn-2">ลบ</button></div></div>
+        <div class="card board"><div class="status"><span>งาน • done</span><span>1</span></div><button class="task-btn" data-task-id="learn-3" data-task="วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน"><span>วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</span><span>user1</span></button><div class="item-actions"><button class="tiny-btn" data-edit-task="learn-3">แก้ไข</button><button class="tiny-btn" data-delete-task="learn-3">ลบ</button></div></div>
       </section>
       <section class="card panel section-view" id="assets">
           <div style="font-size:22px;font-weight:700">ข้อเสนอให้สมบูรณ์แบบขึ้น</div>
@@ -176,10 +193,21 @@
       showToast(`เปิดส่วน ${tab}`);
     };
     document.querySelectorAll('[data-tab]').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+    const upsertItem = async (kind, title, detail, url = '', status = '') => {
+      const id = `${kind}-${Date.now()}`;
+      const ok = await postBackend(kind === 'link' ? 'add_link' : 'create', { id, kind, title, detail, url, status });
+      return ok;
+    };
+    document.getElementById('createTask').addEventListener('click', async () => {
+      const title = prompt('ชื่องานใหม่');
+      if (!title) return;
+      const ok = await postBackend('create', { id: `task-${Date.now()}`, kind: 'task', title, detail: 'created from web', status: 'todo' });
+      showToast(ok ? 'เพิ่มงานและบันทึกลง Google Sheets แล้ว' : 'เพิ่มงานแบบเดโม');
+    });
     document.getElementById('addDriveLink').addEventListener('click', async () => {
       const link = prompt('วางลิงก์ Google Drive');
       if (!link) return;
-      const ok = await postBackend('add_link', { title: 'Google Drive link', url: link, detail: link });
+      const ok = await postBackend('add_link', { id: `link-${Date.now()}`, kind: 'link', title: 'Google Drive link', url: link, detail: link });
       showToast(ok ? 'บันทึกลิงก์ลง Google Sheets แล้ว' : 'บันทึกลิงก์แบบเดโม (ยังไม่เชื่อม Apps Script)');
     });
     document.getElementById('lineDemo').addEventListener('click', async () => {
@@ -189,13 +217,37 @@
     document.getElementById('uploadImage').addEventListener('change', (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      postBackend('upload_file', { title: file.name, detail: 'image upload' }).catch(() => {});
+      postBackend('upload_file', { id: `file-${Date.now()}`, kind: 'file', title: file.name, detail: 'image upload' }).catch(() => {});
       showToast(`อัปโหลด ${file.name} แล้ว`);
     });
-    document.querySelectorAll('.task-btn').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.task-btn').forEach(btn => btn.addEventListener('click', async () => {
       const task = btn.dataset.task;
-      postBackend('status_change', { title: task, detail: 'task updated' }).catch(() => {});
+      await postBackend('status_change', { id: btn.dataset.taskId || `task-${Date.now()}`, kind: 'task', title: task, detail: 'task updated', status: 'doing' }).catch(() => {});
       showToast(`เปลี่ยนสถานะ: ${task}`);
+    }));
+    document.querySelectorAll('[data-edit-task]').forEach(btn => btn.addEventListener('click', async () => {
+      const id = btn.dataset.editTask;
+      const current = btn.closest('.card, .board')?.querySelector('.task-btn')?.dataset.task || '';
+      const next = prompt('แก้ไขชื่อ', current);
+      if (!next) return;
+      await postBackend('update', { id, kind: 'task', title: next, detail: 'edited from web', status: 'doing' }).catch(() => {});
+      showToast(`แก้ไขแล้ว: ${next}`);
+    }));
+    document.querySelectorAll('[data-delete-task]').forEach(btn => btn.addEventListener('click', async () => {
+      const id = btn.dataset.deleteTask;
+      await postBackend('delete', { id }).catch(() => {});
+      showToast('ลบรายการแล้ว');
+    }));
+    document.querySelectorAll('[data-edit-link]').forEach(btn => btn.addEventListener('click', async () => {
+      const current = 'https://drive.google.com/drive/folders/1654EojpqzT_fXctvJ9zKfsZkKbsCU9Y7?usp=drive_link';
+      const next = prompt('แก้ไขลิงก์ Drive', current);
+      if (!next) return;
+      await postBackend('update', { id: 'drive-link', kind: 'link', title: 'Google Drive link', url: next, detail: next }).catch(() => {});
+      showToast('แก้ไขลิงก์แล้ว');
+    }));
+    document.querySelectorAll('[data-delete-link]').forEach(btn => btn.addEventListener('click', async () => {
+      await postBackend('delete', { id: 'drive-link' }).catch(() => {});
+      showToast('ลบลิงก์แล้ว');
     }));
     setTab('overview');
     syncBackendLabel();

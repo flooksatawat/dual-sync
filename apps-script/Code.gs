@@ -1,5 +1,5 @@
 const SHEET_NAME = "DualSync";
-const HEADERS = ["timestamp", "type", "title", "detail", "source", "user", "url"];
+const HEADERS = ["id", "kind", "title", "detail", "status", "url", "source", "user", "updatedAt", "deletedAt"];
 
 function doGet() {
   return ContentService.createTextOutput(
@@ -21,22 +21,19 @@ function doPost(e) {
 function handleAction(action, payload) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ensureSheet(ss);
-  const row = [
-    new Date(),
-    action,
-    payload.title || "",
-    payload.detail || "",
-    payload.source || "web",
-    payload.user || "",
-    payload.url || "",
-  ];
-  sheet.appendRow(row);
+  const normalized = normalizePayload(action, payload);
 
-  if (["add_link", "status_change", "upload_file", "summary"].includes(action)) {
-    sendLineNotification(formatLineMessage(action, payload));
+  if (action === "delete") {
+    markDeleted(sheet, normalized.id);
+  } else {
+    upsertRecord(sheet, normalized);
   }
 
-  return { action, stored: true };
+  if (["add_link", "status_change", "upload_file", "summary", "create", "update"].includes(action)) {
+    sendLineNotification(formatLineMessage(action, normalized));
+  }
+
+  return { action, stored: true, id: normalized.id };
 }
 
 function ensureSheet(ss) {
@@ -46,6 +43,50 @@ function ensureSheet(ss) {
     sheet.setFrozenRows(1);
   }
   return sheet;
+}
+
+function normalizePayload(action, payload) {
+  return {
+    id: String(payload.id || Utilities.getUuid()),
+    kind: String(payload.kind || payload.action || action || "item"),
+    title: String(payload.title || ""),
+    detail: String(payload.detail || ""),
+    status: String(payload.status || ""),
+    url: String(payload.url || ""),
+    source: String(payload.source || "web"),
+    user: String(payload.user || ""),
+    updatedAt: new Date(),
+    deletedAt: "",
+  };
+}
+
+function upsertRecord(sheet, record) {
+  const values = sheet.getDataRange().getValues();
+  const rowIndex = values.findIndex((row, index) => index > 0 && String(row[0]) === record.id);
+  const row = [
+    record.id,
+    record.kind,
+    record.title,
+    record.detail,
+    record.status,
+    record.url,
+    record.source,
+    record.user,
+    record.updatedAt,
+    "",
+  ];
+  if (rowIndex === -1) {
+    sheet.appendRow(row);
+  } else {
+    sheet.getRange(rowIndex + 1, 1, 1, row.length).setValues([row]);
+  }
+}
+
+function markDeleted(sheet, id) {
+  const values = sheet.getDataRange().getValues();
+  const rowIndex = values.findIndex((row, index) => index > 0 && String(row[0]) === String(id));
+  if (rowIndex === -1) return;
+  sheet.getRange(rowIndex + 1, 10).setValue(new Date());
 }
 
 function formatLineMessage(action, payload) {
@@ -89,4 +130,3 @@ function sendLineNotification(message) {
 function json(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
-
