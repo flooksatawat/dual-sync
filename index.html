@@ -33,7 +33,7 @@
     .main{display:grid;gap:24px}
     .overview-view{gap:24px}
     .hero{
-      padding:26px;position:relative;overflow:hidden;min-height:320px;isolation:isolate;
+      padding:26px;position:relative;overflow:hidden;isolation:isolate;
       background:
         linear-gradient(135deg,rgba(18,28,49,.92),rgba(22,18,38,.95) 58%,rgba(44,27,61,.92)),
         radial-gradient(circle at 12% 12%,rgba(56,189,248,.22),transparent 30%);
@@ -56,8 +56,8 @@
       filter:blur(12px);
       pointer-events:none;
     }
-    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(320px,1fr) minmax(340px,.82fr) minmax(240px,.56fr);gap:24px;align-items:stretch}
-    .hero-command{min-height:252px;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(320px,1fr) minmax(340px,.82fr) minmax(240px,.56fr);gap:24px;align-items:start}
+    .hero-command{min-height:auto;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
     .hero-actions{display:grid;gap:18px;align-content:start}
     .hero .toolbar{margin-top:0}
     .orb-stack{position:relative;flex:1;min-height:128px;border-radius:30px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
@@ -74,7 +74,7 @@
       background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.035));
       border:1px solid rgba(255,255,255,.12);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.25);
-      display:grid;gap:16px;align-content:space-between;min-height:252px
+      display:grid;gap:16px;align-content:space-between;min-height:auto
     }
     .hero-learning{
       align-self:stretch;
@@ -83,7 +83,7 @@
       background:linear-gradient(160deg,rgba(56,189,248,.12),rgba(217,70,239,.1) 55%,rgba(255,255,255,.03));
       border:1px solid rgba(255,255,255,.12);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.22);
-      display:grid;gap:14px;align-content:start;min-height:252px
+      display:grid;gap:14px;align-content:start;min-height:auto
     }
     .hero-learning h3{margin:0;font-size:16px;letter-spacing:-.02em}
     .hero-learning .learn-item{padding:14px 15px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
