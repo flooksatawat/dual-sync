@@ -105,7 +105,7 @@
             <div style="font-weight:700">เชื่อมต่อ Apps Script</div>
             <div style="color:var(--muted);font-size:13px">Google Sheets ใช้เก็บข้อมูลอย่างเดียว ทุกการใช้งานทำผ่านหน้าเว็บนี้ทั้งหมด</div>
           </div>
-          <code id="backendLabel">ยังไม่เชื่อมต่อ</code>
+          <code id="backendLabel">กำลังเชื่อมต่อ...</code>
         </div>
       </section>
       <section class="section section-view active" id="work">
@@ -175,8 +175,8 @@
     const backendLabel = document.getElementById('backendLabel');
     const DEFAULT_BACKEND_URL = 'https://script.google.com/macros/s/AKfycby4zfe7zMCkAQhvYMWp-AOtygffDLG92NC4mYBKEBrcFELk-FHLjc_gDCgmX2XoGGEi/exec';
     const backendUrl = localStorage.getItem(BACKEND_KEY) || DEFAULT_BACKEND_URL;
-    if (!localStorage.getItem(BACKEND_KEY)) localStorage.setItem(BACKEND_KEY, backendUrl);
-    if (backendUrl) backendLabel.textContent = backendUrl;
+    localStorage.setItem(BACKEND_KEY, backendUrl);
+    backendLabel.textContent = backendUrl;
     const syncBackendLabel = () => { backendLabel.textContent = localStorage.getItem(BACKEND_KEY) || DEFAULT_BACKEND_URL; };
     const postBackend = async (action, payload = {}) => {
       const url = localStorage.getItem(BACKEND_KEY);
