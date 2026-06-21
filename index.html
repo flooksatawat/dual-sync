@@ -124,6 +124,9 @@
     .learn-tags span{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#d8e2f2}
     .learn-header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
     .learn-title{font-size:24px;font-weight:800;letter-spacing:-.03em}
+    .learn-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .learn-action{padding:10px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.07);color:var(--text);font:inherit;cursor:pointer}
+    .learn-action.primary{background:linear-gradient(135deg,rgba(56,189,248,.92),rgba(52,211,153,.82));color:#06111f;font-weight:800;border:0}
     .phone{display:none}
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
     #toast:empty{display:none}
@@ -310,10 +313,13 @@
       <section class="layout3 section-view" id="learn">
         <div class="learn-header">
           <div class="learn-title">การเรียนรู้</div>
-          <div class="tag-bar" id="learnTagBar">
-            <button class="tag-chip active" type="button" data-learn-tag="all">ทั้งหมด</button>
-            <button class="tag-chip" type="button" data-learn-tag="mindset">Mindset</button>
-            <button class="tag-chip" type="button" data-learn-tag="ai">AI</button>
+          <div class="learn-actions">
+            <div class="tag-bar" id="learnTagBar">
+              <button class="tag-chip active" type="button" data-learn-tag="all">ทั้งหมด</button>
+              <button class="tag-chip" type="button" data-learn-tag="mindset">Mindset</button>
+              <button class="tag-chip" type="button" data-learn-tag="ai">AI</button>
+            </div>
+            <button class="learn-action primary" type="button" id="addLearnBtn">เพิ่มการเรียนรู้</button>
           </div>
         </div>
         <div class="card board learn-card" data-learn-tags="ai,mindset">
@@ -321,24 +327,28 @@
           <div class="learn-tags"><span>AI</span><span>Mindset</span></div>
           <div class="card-item"><b>คิดให้เป็นระบบ</b><div style="color:var(--muted);margin-top:8px">ใช้โครงสร้างเดียวกันทุกครั้ง ลดงานซ้ำและช่วยให้ทีมทำงานต่อเนื่อง</div></div>
           <div class="card-item"><b>ใช้ AI อย่างมีทิศทาง</b><div style="color:var(--muted);margin-top:8px">ให้ AI ช่วยสรุป ร่าง และตรวจความชัดเจนก่อนส่งงาน</div></div>
+          <div class="item-actions"><button class="tiny-btn" type="button" data-edit-learn-tags="topic-1">แก้ไข Tag</button></div>
         </div>
         <div class="card board learn-card" data-learn-tags="mindset,ai">
           <div class="status"><span>learning • topic 2</span><span>02</span></div>
           <div class="learn-tags"><span>Mindset</span><span>AI</span></div>
           <div class="card-item"><b>การตัดสินใจให้เร็วขึ้น</b><div style="color:var(--muted);margin-top:8px">แยกสิ่งที่ทำวันนี้กับสิ่งที่ควรเก็บไว้พรุ่งนี้ให้ชัด</div></div>
           <div class="card-item"><b>AI เป็นผู้ช่วย ไม่ใช่ตัวแทน</b><div style="color:var(--muted);margin-top:8px">ใช้ AI ช่วยคิดและจัดรูป แต่ยังคุมทิศทางด้วยคน</div></div>
+          <div class="item-actions"><button class="tiny-btn" type="button" data-edit-learn-tags="topic-2">แก้ไข Tag</button></div>
         </div>
         <div class="card board learn-card" data-learn-tags="ai,mindset">
           <div class="status"><span>learning • topic 3</span><span>03</span></div>
           <div class="learn-tags"><span>AI</span><span>Mindset</span></div>
           <div class="card-item"><b>ทบทวนให้เร็ว</b><div style="color:var(--muted);margin-top:8px">สรุปสิ่งที่ทำแล้วและสิ่งที่ต้องเรียนรู้ต่อในรอบถัดไป</div></div>
           <div class="card-item"><b>ขยับจากงานเป็นระบบ</b><div style="color:var(--muted);margin-top:8px">ทำให้การทำงานมี flow เดิมที่พึ่งพาได้ทุกครั้ง</div></div>
+          <div class="item-actions"><button class="tiny-btn" type="button" data-edit-learn-tags="topic-3">แก้ไข Tag</button></div>
         </div>
         <div class="card board learn-card" data-learn-tags="ai,mindset">
           <div class="status"><span>learning • topic 4</span><span>04</span></div>
           <div class="learn-tags"><span>Mindset</span><span>AI</span></div>
           <div class="card-item"><b>สรุปสิ่งสำคัญ</b><div style="color:var(--muted);margin-top:8px">เก็บเฉพาะหัวใจของงานแล้วตัดสิ่งที่ไม่จำเป็นออก</div></div>
           <div class="card-item"><b>เรียนรู้ต่อเนื่อง</b><div style="color:var(--muted);margin-top:8px">ปรับทีละจุดให้ใช้ได้จริงและกลับมาใช้งานซ้ำได้</div></div>
+          <div class="item-actions"><button class="tiny-btn" type="button" data-edit-learn-tags="topic-4">แก้ไข Tag</button></div>
         </div>
       </section>
       <div class="phone" id="navMobile">
@@ -411,6 +421,39 @@
       showToast(tag === 'all' ? 'แสดงทุกหมวด' : `แสดงหมวด ${tag}`);
     };
     learnTagButtons.forEach(btn => btn.addEventListener('click', () => setLearnFilter(btn.dataset.learnTag)));
+    const learnTagList = ['ai', 'mindset'];
+    const formatLearnTagLabel = (tag) => tag === 'ai' ? 'AI' : tag === 'mindset' ? 'Mindset' : tag;
+    const renderLearnTagList = (selected = []) => `
+      <div class="detail-list">
+        ${learnTagList.map(tag => {
+          const checked = selected.includes(tag) ? 'checked' : '';
+          return `<label class="detail-item" style="justify-content:flex-start;gap:12px"><input type="checkbox" name="learnTagChoice" value="${tag}" ${checked} style="width:18px;height:18px;accent-color:#38bdf8"><span>${formatLearnTagLabel(tag)}</span></label>`;
+        }).join('')}
+      </div>`;
+    const syncLearnCardTags = (card, tags) => {
+      card.dataset.learnTags = tags.join(',');
+      const chips = card.querySelector('.learn-tags');
+      if (chips) chips.innerHTML = tags.map(tag => `<span>${formatLearnTagLabel(tag)}</span>`).join('');
+    };
+    document.getElementById('addLearnBtn').addEventListener('click', () => {
+      openModal(
+        'เพิ่มการเรียนรู้',
+        '<label class="modal-field"><span>หัวข้อเรียนรู้</span><input id="learnTitleInput" type="text" placeholder="เช่น การคิดเป็นระบบ"></label><label class="modal-field"><span>รายละเอียด</span><textarea id="learnDetailInput" rows="4" placeholder="เขียนสรุปสั้น ๆ"></textarea></label><div class="modal-field"><span>แท็ก</span><div class="detail-list"><label class="detail-item" style="justify-content:flex-start;gap:12px"><input type="checkbox" id="learnTagAi" checked style="width:18px;height:18px;accent-color:#38bdf8"><span>AI</span></label><label class="detail-item" style="justify-content:flex-start;gap:12px"><input type="checkbox" id="learnTagMindset" checked style="width:18px;height:18px;accent-color:#38bdf8"><span>Mindset</span></label></div></div>',
+        '<button class="action secondary" type="button" data-close-modal="true">ยกเลิก</button><button class="action" type="button" id="submitLearnBtn">บันทึกการเรียนรู้</button>'
+      );
+      requestAnimationFrame(() => document.getElementById('learnTitleInput')?.focus());
+    });
+    document.querySelectorAll('[data-edit-learn-tags]').forEach(btn => btn.addEventListener('click', () => {
+      const card = btn.closest('.learn-card');
+      const currentTags = (card?.dataset.learnTags || '').split(',').map(s => s.trim()).filter(Boolean);
+      const title = card?.querySelector('.card-item b')?.textContent || 'การเรียนรู้';
+      openModal(
+        `แก้ไข Tag: ${title}`,
+        renderLearnTagList(currentTags),
+        '<button class="action secondary" type="button" data-close-modal="true">ยกเลิก</button><button class="action" type="button" id="saveLearnTagsBtn">บันทึก Tag</button>'
+      );
+      modal.dataset.editLearnTarget = btn.dataset.editLearnTags || '';
+    }));
     const upsertItem = async (kind, title, detail, url = '', status = '') => {
       const id = `${kind}-${Date.now()}`;
       const ok = await postBackend(kind === 'link' ? 'add_link' : 'create', { id, kind, title, detail, url, status });
@@ -475,6 +518,28 @@
         const ok = await postBackend('summary', { title: 'ทดสอบส่งข้อความ', detail: 'LINE notification test' });
         closeModal();
         showToast(ok ? 'ส่งข้อความผ่าน Apps Script แล้ว' : 'ทดสอบส่งข้อความไป LINE แล้ว (เดโม)');
+      }
+      if (e.target.id === 'submitLearnBtn') {
+        const title = document.getElementById('learnTitleInput')?.value.trim();
+        const detail = document.getElementById('learnDetailInput')?.value.trim() || 'created from web';
+        const tags = [
+          document.getElementById('learnTagAi')?.checked ? 'ai' : '',
+          document.getElementById('learnTagMindset')?.checked ? 'mindset' : '',
+        ].filter(Boolean);
+        if (!title) return;
+        const ok = await postBackend('create', { id: `learn-${Date.now()}`, kind: 'learn', title, detail, tags });
+        closeModal();
+        showToast(ok ? 'เพิ่มการเรียนรู้และบันทึกลง Google Sheets แล้ว' : 'เพิ่มการเรียนรู้แบบเดโม');
+      }
+      if (e.target.id === 'saveLearnTagsBtn') {
+        const targetId = modal.dataset.editLearnTarget;
+        const card = document.querySelector(`[data-edit-learn-tags="${targetId}"]`)?.closest('.learn-card');
+        if (!card) return;
+        const tags = Array.from(modalBody.querySelectorAll('input[name="learnTagChoice"]:checked')).map(el => el.value);
+        syncLearnCardTags(card, tags.length ? tags : ['mindset']);
+        await postBackend('update', { id: targetId, kind: 'learn', tags }).catch(() => {});
+        closeModal();
+        showToast('แก้ไข Tag แล้ว');
       }
     });
     document.getElementById('uploadImage').addEventListener('change', (e) => {
