@@ -170,8 +170,6 @@
         <button data-tab="overview" class="active">ภาพรวม</button>
         <button data-tab="work">งาน</button>
         <button data-tab="learn">เรียนรู้</button>
-        <button data-tab="assets">คลังข้อมูล</button>
-        <button data-tab="updates">อัปเดต</button>
       </div>
       <div class="footer">
         <div class="avatars"><span></span><span></span></div>
@@ -214,7 +212,6 @@
       <section class="grid4">
         <button class="card mini stat-card" data-stat="done" type="button"><div>งานที่ทำ</div><div class="v">7/10</div><div class="mini-copy">แตะเพื่อดูรายการงานที่ทำแล้ว</div></button>
         <button class="card mini stat-card" data-stat="remaining" type="button"><div>งานที่เหลือ</div><div class="v">3/10</div><div class="mini-copy">แตะเพื่อดูงานที่ยังรอทำ</div></button>
-        <button class="card mini stat-card" data-stat="assets" type="button"><div>คลังข้อมูล</div><div class="v">2</div><div class="mini-copy">แตะเพื่อดูลิงก์และไฟล์ที่เก็บไว้</div></button>
       </section>
       <section class="section section-view active" id="work">
         <div class="card panel">
@@ -271,21 +268,8 @@
           <div class="card-item"><b>การใช้งานมือถือ</b><div style="color:var(--muted);margin-top:8px">ออกแบบให้แตะง่าย อ่านชัด และไม่อึดอัด</div></div>
         </div>
       </section>
-      <section class="card panel section-view" id="assets">
-          <div style="font-size:22px;font-weight:700">ข้อเสนอให้สมบูรณ์แบบขึ้น</div>
-          <ol style="line-height:1.9;color:var(--text)">
-          <li>ใช้หน้าเว็บเป็นจุดใช้งานหลักทั้งหมด</li>
-          <li>ให้ Google Sheets เป็นที่เก็บข้อมูลกลางเท่านั้น</li>
-          <li>เพิ่มแจ้งเตือนอัตโนมัติผ่าน LINE</li>
-          <li>ทำ drag-and-drop สำหรับ card และอัปโหลดไฟล์เข้าลิงก์ Drive โดยตรง</li>
-          </ol>
-      </section>
-      <section class="card panel section-view" id="updates">
-        <div style="font-size:22px;font-weight:700">อัปเดตล่าสุด</div>
-        <div class="card-item">ระบบจะใช้ปุ่มด้านบนเพื่อส่งสถานะ, เพิ่มลิงก์, และอัปเดตงานได้</div>
-      </section>
       <div class="phone" id="navMobile">
-        <button data-tab="overview" class="active">ภาพรวม</button><button data-tab="work">งาน</button><button data-tab="learn">เรียนรู้</button><button data-tab="assets">ข้อมูล</button><button data-tab="updates">อัปเดต</button>
+        <button data-tab="overview" class="active">ภาพรวม</button><button data-tab="work">งาน</button><button data-tab="learn">เรียนรู้</button>
       </div>
   <div class="modal" id="actionModal" aria-hidden="true">
     <div class="modal-backdrop" data-close-modal="true"></div>
@@ -380,8 +364,6 @@
         openModal('งานที่ทำ 7/10', '<div class="detail-list"><div class="detail-item"><b>วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</b><span>user1</span></div><div class="detail-item"><b>ออกแบบหน้า Home สำหรับมือถือ</b><span>user2</span></div><div class="detail-item"><b>ทบทวน Google Drive structure</b><span>user1</span></div></div>');
       } else if (stat === 'remaining') {
         openModal('งานที่เหลือ 3/10', '<div class="detail-list"><div class="detail-item"><b>เตรียม milestone รอบแรก</b><span>todo</span></div><div class="detail-item"><b>ปรับภาพรวมการ์ดและระยะห่าง</b><span>todo</span></div><div class="detail-item"><b>ทดสอบปุ่มทุกฟังก์ชัน</b><span>todo</span></div></div>');
-      } else {
-        openModal('คลังข้อมูล 2', '<div class="detail-list"><div class="detail-item"><b>Google Drive</b><span>โฟลเดอร์กลางของทีม</span></div><div class="detail-item"><b>Apps Script</b><span>เก็บข้อมูลเบื้องหลัง</span></div></div>');
       }
     }));
     modalActions.addEventListener('click', async (e) => {
