@@ -122,6 +122,8 @@
     .learn-card{display:grid;gap:12px}
     .learn-tags{display:flex;gap:8px;flex-wrap:wrap}
     .learn-tags span{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#d8e2f2}
+    .learn-header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .learn-title{font-size:24px;font-weight:800;letter-spacing:-.03em}
     .phone{display:none}
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
     #toast:empty{display:none}
@@ -306,54 +308,37 @@
         </div>
       </section>
       <section class="layout3 section-view" id="learn">
-        <div class="tag-bar" id="learnTagBar">
-          <button class="tag-chip active" type="button" data-learn-tag="all">ทั้งหมด</button>
-          <button class="tag-chip" type="button" data-learn-tag="workflow">Workflow</button>
-          <button class="tag-chip" type="button" data-learn-tag="drive">Drive</button>
-          <button class="tag-chip" type="button" data-learn-tag="script">Apps Script</button>
-          <button class="tag-chip" type="button" data-learn-tag="automation">Automation</button>
-          <button class="tag-chip" type="button" data-learn-tag="notify">Notify</button>
-          <button class="tag-chip" type="button" data-learn-tag="sheets">Sheets</button>
-          <button class="tag-chip" type="button" data-learn-tag="mobile">Mobile</button>
-          <button class="tag-chip" type="button" data-learn-tag="ui">UI</button>
-          <button class="tag-chip" type="button" data-learn-tag="ai">AI</button>
-          <button class="tag-chip" type="button" data-learn-tag="mindset">Mindset</button>
+        <div class="learn-header">
+          <div class="learn-title">การเรียนรู้</div>
+          <div class="tag-bar" id="learnTagBar">
+            <button class="tag-chip active" type="button" data-learn-tag="all">ทั้งหมด</button>
+            <button class="tag-chip" type="button" data-learn-tag="mindset">Mindset</button>
+            <button class="tag-chip" type="button" data-learn-tag="ai">AI</button>
+          </div>
         </div>
-        <div class="card board learn-card" data-learn-tags="workflow,script,ai">
+        <div class="card board learn-card" data-learn-tags="ai,mindset">
           <div class="status"><span>learning • topic 1</span><span>01</span></div>
-          <div class="learn-tags"><span>Workflow</span><span>Script</span><span>AI</span></div>
-          <div class="card-item"><b>พื้นฐานการทำงานร่วมกัน</b><div style="color:var(--muted);margin-top:8px">วางขอบเขตงาน แบ่งหน้าที่ และสื่อสารให้ชัดเจน</div></div>
-          <div class="card-item"><b>โครงสร้างข้อมูล</b><div style="color:var(--muted);margin-top:8px">จัดเก็บลิงก์ ไฟล์ และสถานะงานให้ค้นหาง่าย</div></div>
+          <div class="learn-tags"><span>AI</span><span>Mindset</span></div>
+          <div class="card-item"><b>คิดให้เป็นระบบ</b><div style="color:var(--muted);margin-top:8px">ใช้โครงสร้างเดียวกันทุกครั้ง ลดงานซ้ำและช่วยให้ทีมทำงานต่อเนื่อง</div></div>
+          <div class="card-item"><b>ใช้ AI อย่างมีทิศทาง</b><div style="color:var(--muted);margin-top:8px">ให้ AI ช่วยสรุป ร่าง และตรวจความชัดเจนก่อนส่งงาน</div></div>
         </div>
-        <div class="card board learn-card" data-learn-tags="drive,workflow,mindset">
+        <div class="card board learn-card" data-learn-tags="mindset,ai">
           <div class="status"><span>learning • topic 2</span><span>02</span></div>
-          <div class="learn-tags"><span>Drive</span><span>Workflow</span><span>Mindset</span></div>
-          <div class="card-item"><b>Google Drive Workflow</b><div style="color:var(--muted);margin-top:8px">ใช้ Drive เป็นคลังกลางให้เข้าถึงข้ามอุปกรณ์</div></div>
-          <div class="card-item"><b>Apps Script Integration</b><div style="color:var(--muted);margin-top:8px">ส่งข้อมูลเข้า Sheets เบื้องหลังอัตโนมัติ</div></div>
+          <div class="learn-tags"><span>Mindset</span><span>AI</span></div>
+          <div class="card-item"><b>การตัดสินใจให้เร็วขึ้น</b><div style="color:var(--muted);margin-top:8px">แยกสิ่งที่ทำวันนี้กับสิ่งที่ควรเก็บไว้พรุ่งนี้ให้ชัด</div></div>
+          <div class="card-item"><b>AI เป็นผู้ช่วย ไม่ใช่ตัวแทน</b><div style="color:var(--muted);margin-top:8px">ใช้ AI ช่วยคิดและจัดรูป แต่ยังคุมทิศทางด้วยคน</div></div>
         </div>
-        <div class="card board learn-card" data-learn-tags="notify,mobile,ai,mindset">
+        <div class="card board learn-card" data-learn-tags="ai,mindset">
           <div class="status"><span>learning • topic 3</span><span>03</span></div>
-          <div class="learn-tags"><span>Notify</span><span>Mobile</span><span>AI</span><span>Mindset</span></div>
-          <div class="card-item"><b>การแจ้งเตือน</b><div style="color:var(--muted);margin-top:8px">สรุปสถานะและแจ้งเตือนเมื่อข้อมูลเปลี่ยน</div></div>
-          <div class="card-item"><b>การใช้งานมือถือ</b><div style="color:var(--muted);margin-top:8px">ออกแบบให้แตะง่าย อ่านชัด และไม่อึดอัด</div></div>
+          <div class="learn-tags"><span>AI</span><span>Mindset</span></div>
+          <div class="card-item"><b>ทบทวนให้เร็ว</b><div style="color:var(--muted);margin-top:8px">สรุปสิ่งที่ทำแล้วและสิ่งที่ต้องเรียนรู้ต่อในรอบถัดไป</div></div>
+          <div class="card-item"><b>ขยับจากงานเป็นระบบ</b><div style="color:var(--muted);margin-top:8px">ทำให้การทำงานมี flow เดิมที่พึ่งพาได้ทุกครั้ง</div></div>
         </div>
-        <div class="card board learn-card" data-learn-tags="automation,sheets,workflow">
+        <div class="card board learn-card" data-learn-tags="ai,mindset">
           <div class="status"><span>learning • topic 4</span><span>04</span></div>
-          <div class="learn-tags"><span>Automation</span><span>Sheets</span><span>Workflow</span></div>
-          <div class="card-item"><b>จัดการข้อมูลอัตโนมัติ</b><div style="color:var(--muted);margin-top:8px">เขียนข้อมูลลง Google Sheets ให้เป็นศูนย์กลางข้อมูลเดียว</div></div>
-          <div class="card-item"><b>โครงสร้างบันทึกข้อมูล</b><div style="color:var(--muted);margin-top:8px">แยกงาน ลิงก์ และไฟล์ให้อ่านง่ายในระยะยาว</div></div>
-        </div>
-        <div class="card board learn-card" data-learn-tags="ui,mobile,workflow">
-          <div class="status"><span>learning • topic 5</span><span>05</span></div>
-          <div class="learn-tags"><span>UI</span><span>Mobile</span><span>Workflow</span></div>
-          <div class="card-item"><b>ออกแบบหน้าจอให้ชัด</b><div style="color:var(--muted);margin-top:8px">วาง hierarchy ให้คนใช้เข้าใจทันทีตั้งแต่เปิดหน้า</div></div>
-          <div class="card-item"><b>จังหวะการใช้งาน</b><div style="color:var(--muted);margin-top:8px">ลดจำนวนปุ่มที่ต้องคิดเยอะและเน้นการใช้งานจริง</div></div>
-        </div>
-        <div class="card board learn-card" data-learn-tags="ai,mindset,workflow">
-          <div class="status"><span>learning • topic 6</span><span>06</span></div>
-          <div class="learn-tags"><span>AI</span><span>Mindset</span><span>Workflow</span></div>
-          <div class="card-item"><b>คิดแบบระบบ</b><div style="color:var(--muted);margin-top:8px">แปลงสิ่งที่ทำซ้ำให้กลายเป็น flow ที่ใช้ซ้ำได้</div></div>
-          <div class="card-item"><b>การใช้ AI ช่วยงาน</b><div style="color:var(--muted);margin-top:8px">ใช้ AI ช่วยร่าง, สรุป, และจัดรูปแบบข้อมูลได้ไวขึ้น</div></div>
+          <div class="learn-tags"><span>Mindset</span><span>AI</span></div>
+          <div class="card-item"><b>สรุปสิ่งสำคัญ</b><div style="color:var(--muted);margin-top:8px">เก็บเฉพาะหัวใจของงานแล้วตัดสิ่งที่ไม่จำเป็นออก</div></div>
+          <div class="card-item"><b>เรียนรู้ต่อเนื่อง</b><div style="color:var(--muted);margin-top:8px">ปรับทีละจุดให้ใช้ได้จริงและกลับมาใช้งานซ้ำได้</div></div>
         </div>
       </section>
       <div class="phone" id="navMobile">
