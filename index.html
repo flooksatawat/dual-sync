@@ -35,8 +35,9 @@
     .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:#cfe8ff}
     .sub{max-width:840px;color:var(--muted);font-size:16px;line-height:1.7}
     .grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .mini{padding:18px;min-height:112px}
+    .mini{padding:18px;min-height:112px;text-align:left;width:100%;display:flex;flex-direction:column;justify-content:space-between}
     .mini .v{font-size:34px;font-weight:800;margin-top:10px}
+    .mini-copy{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.4}
     .section{display:grid;grid-template-columns:1.25fr .95fr;gap:18px}
     .panel{padding:22px}
     .progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:12px 0 18px}
@@ -62,6 +63,23 @@
     .hidden-by-tab{display:none}
     .config{padding:12px 16px;border-radius:18px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--text)}
     .config code{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:340px;display:inline-block}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:30;padding:16px}
+    .modal.open{display:flex}
+    .modal-backdrop{position:absolute;inset:0;background:rgba(2,6,23,.68);backdrop-filter:blur(10px)}
+    .modal-card{position:relative;z-index:1;width:min(860px,100%);max-height:min(82vh,760px);overflow:auto;padding:24px;border-radius:28px;background:linear-gradient(180deg,rgba(14,19,38,.98),rgba(9,12,24,.98));border:1px solid rgba(255,255,255,.14);box-shadow:0 28px 90px rgba(0,0,0,.5)}
+    .modal-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .modal-kicker{color:#8fb8ff;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+    .modal-title{font-size:28px;font-weight:800;margin-top:6px}
+    .modal-body{margin-top:18px;display:grid;gap:14px}
+    .modal-actions{margin-top:22px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+    .modal-field{display:grid;gap:8px}
+    .modal-field span{font-size:13px;color:var(--muted)}
+    .modal-field input,.modal-field textarea{width:100%;padding:14px 16px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--text);font:inherit;outline:none}
+    .modal-field textarea{resize:vertical;min-height:120px}
+    .info-box,.detail-item{padding:16px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+    .detail-list{display:grid;gap:10px}
+    .detail-item{display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .detail-item span{color:var(--muted);font-size:13px}
     @media (max-width:1100px){
       .wrap{grid-template-columns:1fr}
       .side{display:none}
@@ -125,9 +143,9 @@
         <p id="toast" class="sub" style="min-height:1.2em;margin-top:14px"></p>
       </section>
       <section class="grid4">
-        <div class="card mini"><div>งานที่ทำ</div><div class="v">7/10</div></div>
-        <div class="card mini"><div>งานที่เหลือ</div><div class="v">3/10</div></div>
-        <div class="card mini"><div>คลังข้อมูล</div><div class="v">2</div></div>
+        <button class="card mini stat-card" data-stat="done" type="button"><div>งานที่ทำ</div><div class="v">7/10</div><div class="mini-copy">แตะเพื่อดูรายการงานที่ทำแล้ว</div></button>
+        <button class="card mini stat-card" data-stat="remaining" type="button"><div>งานที่เหลือ</div><div class="v">3/10</div><div class="mini-copy">แตะเพื่อดูงานที่ยังรอทำ</div></button>
+        <button class="card mini stat-card" data-stat="assets" type="button"><div>คลังข้อมูล</div><div class="v">2</div><div class="mini-copy">แตะเพื่อดูลิงก์และไฟล์ที่เก็บไว้</div></button>
       </section>
       <section class="section section-view active" id="work">
         <div class="card panel">
@@ -188,14 +206,44 @@
       <div class="phone" id="navMobile">
         <button data-tab="overview" class="active">ภาพรวม</button><button data-tab="work">งาน</button><button data-tab="learn">เรียนรู้</button><button data-tab="assets">ข้อมูล</button><button data-tab="updates">อัปเดต</button>
       </div>
-    </main>
+  <div class="modal" id="actionModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal="true"></div>
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="modal-kicker">Dual Sync</div>
+          <div class="modal-title" id="modalTitle">หัวข้อ</div>
+        </div>
+        <button class="action secondary" type="button" data-close-modal="true">ปิด</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
   </div>
   <script>
     const BACKEND_KEY = 'duosync_backend_url';
     const toast = document.getElementById('toast');
+    const modal = document.getElementById('actionModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalActions = document.getElementById('modalActions');
     const DEFAULT_BACKEND_URL = 'https://script.google.com/macros/s/AKfycby4zfe7zMCkAQhvYMWp-AOtygffDLG92NC4mYBKEBrcFELk-FHLjc_gDCgmX2XoGGEi/exec';
     const backendUrl = localStorage.getItem(BACKEND_KEY) || DEFAULT_BACKEND_URL;
     localStorage.setItem(BACKEND_KEY, backendUrl);
+    const openModal = (title, bodyHtml, actionsHtml = '') => {
+      modalTitle.textContent = title;
+      modalBody.innerHTML = bodyHtml;
+      modalActions.innerHTML = actionsHtml;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    };
+    const closeModal = () => {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    };
+    modal?.addEventListener('click', (e) => {
+      if (e.target?.dataset?.closeModal) closeModal();
+    });
     const postBackend = async (action, payload = {}) => {
       const url = localStorage.getItem(BACKEND_KEY);
       if (!url) return false;
@@ -219,20 +267,65 @@
       return ok;
     };
     document.getElementById('createTask').addEventListener('click', async () => {
-      const title = prompt('ชื่องานใหม่');
-      if (!title) return;
-      const ok = await postBackend('create', { id: `task-${Date.now()}`, kind: 'task', title, detail: 'created from web', status: 'todo' });
-      showToast(ok ? 'เพิ่มงานและบันทึกลง Google Sheets แล้ว' : 'เพิ่มงานแบบเดโม');
+      openModal(
+        'เพิ่มงานใหม่',
+        '<label class="modal-field"><span>ชื่องาน</span><input id="taskTitleInput" type="text" placeholder="เช่น วางแผนงานสัปดาห์นี้"></label><label class="modal-field"><span>รายละเอียด</span><textarea id="taskDetailInput" rows="4" placeholder="เขียนรายละเอียดสั้น ๆ"></textarea></label>',
+        '<button class="action secondary" type="button" data-close-modal="true">ยกเลิก</button><button class="action" type="button" id="submitTaskBtn">บันทึกงาน</button>'
+      );
+      requestAnimationFrame(() => document.getElementById('taskTitleInput')?.focus());
     });
     document.getElementById('addDriveLink').addEventListener('click', async () => {
-      const link = prompt('วางลิงก์ Google Drive');
-      if (!link) return;
-      const ok = await postBackend('add_link', { id: `link-${Date.now()}`, kind: 'link', title: 'Google Drive link', url: link, detail: link });
-      showToast(ok ? 'บันทึกลิงก์ลง Google Sheets แล้ว' : 'บันทึกลิงก์แบบเดโม (ยังไม่เชื่อม Apps Script)');
+      openModal(
+        'เพิ่มลิงก์ Drive',
+        '<label class="modal-field"><span>ลิงก์</span><input id="linkInput" type="url" placeholder="https://drive.google.com/..."></label><label class="modal-field"><span>ชื่อ</span><input id="linkTitleInput" type="text" placeholder="เช่น โฟลเดอร์งานหลัก"></label>',
+        '<button class="action secondary" type="button" data-close-modal="true">ยกเลิก</button><button class="action" type="button" id="submitLinkBtn">บันทึกลิงก์</button>'
+      );
+      requestAnimationFrame(() => document.getElementById('linkInput')?.focus());
     });
     document.getElementById('lineDemo').addEventListener('click', async () => {
-      const ok = await postBackend('summary', { title: 'ทดสอบส่งข้อความ', detail: 'LINE notification test' });
-      showToast(ok ? 'ส่งข้อความผ่าน Apps Script แล้ว' : 'ทดสอบส่งข้อความไป LINE แล้ว (เดโม)');
+      openModal(
+        'ทดสอบ LINE',
+        '<div style="display:grid;gap:12px"><div class="info-box">ใช้สำหรับจำลองข้อความแจ้งเตือน เมื่อมีการเพิ่มลิงก์ เปลี่ยนสถานะ หรืออัปโหลดไฟล์</div><div class="info-box">ถ้าต้องการ ผมสามารถผูกกับ LINE Notify/LIFF ตาม flow ที่คุณใช้ได้ต่อทันที</div></div>',
+        '<button class="action secondary" type="button" data-close-modal="true">ปิด</button><button class="action" type="button" id="submitLineBtn">ส่งทดสอบ</button>'
+      );
+    });
+    document.querySelectorAll('[data-delete-link]').forEach(btn => btn.addEventListener('click', async () => {
+      await postBackend('delete', { id: 'drive-link' }).catch(() => {});
+      showToast('ลบลิงก์แล้ว');
+    }));
+    document.querySelectorAll('.stat-card').forEach(card => card.addEventListener('click', () => {
+      const stat = card.dataset.stat;
+      if (stat === 'done') {
+        openModal('งานที่ทำ 7/10', '<div class="detail-list"><div class="detail-item"><b>วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</b><span>user1</span></div><div class="detail-item"><b>ออกแบบหน้า Home สำหรับมือถือ</b><span>user2</span></div><div class="detail-item"><b>ทบทวน Google Drive structure</b><span>user1</span></div></div>');
+      } else if (stat === 'remaining') {
+        openModal('งานที่เหลือ 3/10', '<div class="detail-list"><div class="detail-item"><b>เตรียม milestone รอบแรก</b><span>todo</span></div><div class="detail-item"><b>ปรับภาพรวมการ์ดและระยะห่าง</b><span>todo</span></div><div class="detail-item"><b>ทดสอบปุ่มทุกฟังก์ชัน</b><span>todo</span></div></div>');
+      } else {
+        openModal('คลังข้อมูล 2', '<div class="detail-list"><div class="detail-item"><b>Google Drive</b><span>โฟลเดอร์กลางของทีม</span></div><div class="detail-item"><b>Apps Script</b><span>เก็บข้อมูลเบื้องหลัง</span></div></div>');
+      }
+    }));
+    modalActions.addEventListener('click', async (e) => {
+      if (!(e.target instanceof HTMLElement)) return;
+      if (e.target.id === 'submitTaskBtn') {
+        const title = document.getElementById('taskTitleInput')?.value.trim();
+        const detail = document.getElementById('taskDetailInput')?.value.trim() || 'created from web';
+        if (!title) return;
+        const ok = await postBackend('create', { id: `task-${Date.now()}`, kind: 'task', title, detail, status: 'todo' });
+        closeModal();
+        showToast(ok ? 'เพิ่มงานและบันทึกลง Google Sheets แล้ว' : 'เพิ่มงานแบบเดโม');
+      }
+      if (e.target.id === 'submitLinkBtn') {
+        const url = document.getElementById('linkInput')?.value.trim();
+        const title = document.getElementById('linkTitleInput')?.value.trim() || 'Google Drive link';
+        if (!url) return;
+        const ok = await postBackend('add_link', { id: `link-${Date.now()}`, kind: 'link', title, url, detail: url });
+        closeModal();
+        showToast(ok ? 'บันทึกลิงก์ลง Google Sheets แล้ว' : 'บันทึกลิงก์แบบเดโม');
+      }
+      if (e.target.id === 'submitLineBtn') {
+        const ok = await postBackend('summary', { title: 'ทดสอบส่งข้อความ', detail: 'LINE notification test' });
+        closeModal();
+        showToast(ok ? 'ส่งข้อความผ่าน Apps Script แล้ว' : 'ทดสอบส่งข้อความไป LINE แล้ว (เดโม)');
+      }
     });
     document.getElementById('uploadImage').addEventListener('change', (e) => {
       const file = e.target.files && e.target.files[0];
