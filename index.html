@@ -56,7 +56,7 @@
       filter:blur(12px);
       pointer-events:none;
     }
-    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(320px,1fr) minmax(340px,.82fr);gap:24px;align-items:stretch}
+    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(320px,1fr) minmax(340px,.82fr) minmax(240px,.56fr);gap:24px;align-items:stretch}
     .hero-command{min-height:252px;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
     .hero-actions{display:grid;gap:18px;align-content:start}
     .hero .toolbar{margin-top:0}
@@ -76,6 +76,19 @@
       box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.25);
       display:grid;gap:16px;align-content:space-between;min-height:252px
     }
+    .hero-learning{
+      align-self:stretch;
+      padding:22px;
+      border-radius:30px;
+      background:linear-gradient(160deg,rgba(56,189,248,.12),rgba(217,70,239,.1) 55%,rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.22);
+      display:grid;gap:14px;align-content:start;min-height:252px
+    }
+    .hero-learning h3{margin:0;font-size:16px;letter-spacing:-.02em}
+    .hero-learning .learn-item{padding:14px 15px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+    .hero-learning .learn-item b{display:block;font-size:13px;margin-bottom:4px}
+    .hero-learning .learn-item span{display:block;color:var(--muted);font-size:12px;line-height:1.45}
     .hero-panel .panel-row{display:flex;justify-content:space-between;gap:12px;align-items:center}
     .hero-panel .panel-label{color:var(--muted);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
     .hero-panel .panel-value{font-size:clamp(46px,5vw,68px);font-weight:900;line-height:.95;color:var(--text);letter-spacing:-.05em}
@@ -83,7 +96,7 @@
     .hero-tile{padding:18px;border-radius:22px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);min-height:110px;display:flex;flex-direction:column;justify-content:space-between}
     .hero-tile b{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:8px}
     .hero-tile span{font-size:32px;font-weight:900;color:var(--text);line-height:1}
-    .grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .grid4{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
     .stat-card{appearance:none;border:1px solid var(--border);color:var(--text);cursor:pointer;font:inherit;position:relative;overflow:hidden;isolation:isolate;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
     .stat-card::before{content:"";position:absolute;inset:-30% auto auto -20%;width:240px;height:240px;background:radial-gradient(circle,rgba(56,189,248,.2),transparent 68%);filter:blur(2px);z-index:-1}
     .stat-card:nth-child(2)::before{left:auto;right:-22%;background:radial-gradient(circle,rgba(217,70,239,.2),transparent 68%)}
@@ -156,6 +169,7 @@
       .panel{padding:18px}
       .mini{padding:18px;min-height:138px}
       .mini .v{font-size:42px}
+      .hero-learning{padding:16px;min-height:auto}
       .grid4,.section,.layout3{grid-template-columns:1fr}
       .section{gap:12px}
       .toolbar{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
@@ -230,11 +244,27 @@
                 <div class="hero-tile"><b>เหลือ</b><span>3</span></div>
               </div>
             </div>
+            <div class="hero-learning">
+              <h3>การเรียนรู้วันนี้</h3>
+              <div class="learn-item">
+                <b>AI / Workflow</b>
+                <span>วาง flow ให้ทำงานซ้ำได้ และใช้ AI ช่วยสรุปงานอัตโนมัติ</span>
+              </div>
+              <div class="learn-item">
+                <b>Google Sheets</b>
+                <span>จัดเก็บข้อมูลกลางให้ใช้งานได้ข้ามเครื่องและข้ามบัญชี</span>
+              </div>
+              <div class="learn-item">
+                <b>Mobile UI</b>
+                <span>คุมระยะ ปุ่ม และตัวเลขให้แตะง่าย อ่านง่าย และดูโปร</span>
+              </div>
+            </div>
           </div>
         </section>
         <section class="grid4">
           <button class="card mini stat-card" data-stat="done" type="button"><div>งานที่ทำ</div><div class="v">7/10</div><div class="mini-copy">แตะเพื่อดูรายการงานที่ทำแล้ว</div></button>
           <button class="card mini stat-card" data-stat="remaining" type="button"><div>งานที่เหลือ</div><div class="v">3/10</div><div class="mini-copy">แตะเพื่อดูงานที่ยังรอทำ</div></button>
+          <button class="card mini stat-card" data-stat="learn" type="button"><div>สิ่งที่ต้องเรียนรู้</div><div class="v">6</div><div class="mini-copy">แตะเพื่อดูหัวข้อเรียนรู้ทั้งหมด</div></button>
         </section>
       </section>
       <section class="section section-view" id="work">
@@ -434,6 +464,8 @@
         openModal('งานที่ทำ 7/10', '<div class="detail-list"><div class="detail-item"><b>วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</b><span>user1</span></div><div class="detail-item"><b>ออกแบบหน้า Home สำหรับมือถือ</b><span>user2</span></div><div class="detail-item"><b>ทบทวน Google Drive structure</b><span>user1</span></div></div>');
       } else if (stat === 'remaining') {
         openModal('งานที่เหลือ 3/10', '<div class="detail-list"><div class="detail-item"><b>เตรียม milestone รอบแรก</b><span>todo</span></div><div class="detail-item"><b>ปรับภาพรวมการ์ดและระยะห่าง</b><span>todo</span></div><div class="detail-item"><b>ทดสอบปุ่มทุกฟังก์ชัน</b><span>todo</span></div></div>');
+      } else if (stat === 'learn') {
+        openModal('สิ่งที่ต้องเรียนรู้ 6 หัวข้อ', '<div class="detail-list"><div class="detail-item"><b>AI / Workflow</b><span>active</span></div><div class="detail-item"><b>Google Sheets</b><span>active</span></div><div class="detail-item"><b>Mobile UI</b><span>active</span></div><div class="detail-item"><b>Automation</b><span>next</span></div><div class="detail-item"><b>Apps Script</b><span>next</span></div><div class="detail-item"><b>Mindset</b><span>next</span></div></div>');
       }
     }));
     modalActions.addEventListener('click', async (e) => {
