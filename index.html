@@ -10,7 +10,7 @@
       --text:#e8edf7; --muted:#92a0b6; --sky:#38bdf8; --fuchsia:#d946ef; --emerald:#34d399;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:
+    body{margin:0;font-family:"Noto Sans Thai","Segoe UI",Arial,sans-serif;background:
       radial-gradient(circle at 10% 10%, rgba(56,189,248,.22), transparent 28%),
       radial-gradient(circle at 85% 20%, rgba(217,70,239,.18), transparent 25%),
       radial-gradient(circle at 40% 90%, rgba(52,211,153,.12), transparent 25%), var(--bg);
@@ -30,52 +30,67 @@
     .avatars span{width:42px;height:42px;border-radius:14px;border:2px solid #09101f;display:inline-block;background:linear-gradient(135deg,#4f8cff,#7c3aed)}
     .avatars span:last-child{margin-left:-12px;background:linear-gradient(135deg,#f472b6,#a855f7)}
     .main{display:grid;gap:24px}
-    .hero{padding:28px;position:relative;overflow:hidden}
+    .overview-view{gap:24px}
+    .hero{
+      padding:28px;position:relative;overflow:hidden;min-height:360px;isolation:isolate;
+      background:
+        linear-gradient(135deg,rgba(18,28,49,.92),rgba(22,18,38,.95) 58%,rgba(44,27,61,.92)),
+        radial-gradient(circle at 12% 12%,rgba(56,189,248,.22),transparent 30%);
+    }
     .hero::before{
       content:"";
       position:absolute;
-      inset:-20% -10% auto auto;
-      width:260px;height:260px;
+      inset:auto -140px -190px auto;
+      width:430px;height:430px;
       background:radial-gradient(circle, rgba(56,189,248,.22), transparent 62%);
-      filter:blur(8px);
+      filter:blur(10px);
       pointer-events:none;
     }
     .hero::after{
       content:"";
       position:absolute;
-      left:-80px;bottom:-100px;
-      width:240px;height:240px;
-      background:radial-gradient(circle, rgba(217,70,239,.18), transparent 65%);
+      left:-95px;top:-120px;
+      width:320px;height:320px;
+      background:radial-gradient(circle, rgba(217,70,239,.2), transparent 66%);
       filter:blur(12px);
       pointer-events:none;
     }
-    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.85fr);gap:22px;align-items:start}
-    .hero h1{font-size:clamp(34px,5vw,64px);line-height:1.02;margin:14px 0 10px}
+    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(300px,.95fr) minmax(340px,.7fr);gap:28px;align-items:stretch}
+    .hero-command{min-height:304px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+    .hero-actions{display:grid;gap:18px;align-content:start}
+    .hero .toolbar{margin-top:0}
+    .orb-stack{position:relative;flex:1;min-height:168px;border-radius:30px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+    .orb-stack span{position:absolute;border-radius:28px;background:linear-gradient(135deg,rgba(56,189,248,.75),rgba(217,70,239,.48));box-shadow:0 22px 60px rgba(56,189,248,.16);transform:rotate(-8deg)}
+    .orb-stack span:nth-child(1){width:42%;height:78px;left:7%;top:20px}
+    .orb-stack span:nth-child(2){width:34%;height:92px;right:13%;top:46px;background:linear-gradient(135deg,rgba(52,211,153,.68),rgba(56,189,248,.44));transform:rotate(10deg)}
+    .orb-stack span:nth-child(3){width:52%;height:54px;left:23%;bottom:24px;background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04));transform:rotate(0deg)}
     .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:#cfe8ff}
     .sub{max-width:840px;color:var(--muted);font-size:16px;line-height:1.7}
-    .hero-copy{max-width:760px}
-    .hero-copy-short{display:none}
     .hero-panel{
       align-self:stretch;
-      padding:18px;
-      border-radius:24px;
-      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      padding:22px;
+      border-radius:30px;
+      background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.035));
       border:1px solid rgba(255,255,255,.12);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.25);
-      display:grid;gap:14px;justify-content:space-between
+      display:grid;gap:18px;align-content:space-between;min-height:304px
     }
     .hero-panel .panel-row{display:flex;justify-content:space-between;gap:12px;align-items:center}
     .hero-panel .panel-label{color:var(--muted);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
-    .hero-panel .panel-value{font-size:36px;font-weight:800;line-height:1}
-    .hero-panel .panel-note{color:var(--muted);font-size:13px;line-height:1.5}
-    .hero-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .hero-tile{padding:14px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
-    .hero-tile b{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px}
-    .hero-tile span{font-size:22px;font-weight:800}
-    .grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .mini{padding:18px;min-height:112px;text-align:left;width:100%;display:flex;flex-direction:column;justify-content:space-between}
-    .mini .v{font-size:34px;font-weight:800;margin-top:10px}
-    .mini-copy{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.4}
+    .hero-panel .panel-value{font-size:clamp(46px,5vw,68px);font-weight:900;line-height:.95;color:var(--text);letter-spacing:-.05em}
+    .hero-tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .hero-tile{padding:18px;border-radius:22px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);min-height:110px;display:flex;flex-direction:column;justify-content:space-between}
+    .hero-tile b{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:8px}
+    .hero-tile span{font-size:32px;font-weight:900;color:var(--text);line-height:1}
+    .grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .stat-card{appearance:none;border:1px solid var(--border);color:var(--text);cursor:pointer;font:inherit;position:relative;overflow:hidden;isolation:isolate;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+    .stat-card::before{content:"";position:absolute;inset:-30% auto auto -20%;width:240px;height:240px;background:radial-gradient(circle,rgba(56,189,248,.2),transparent 68%);filter:blur(2px);z-index:-1}
+    .stat-card:nth-child(2)::before{left:auto;right:-22%;background:radial-gradient(circle,rgba(217,70,239,.2),transparent 68%)}
+    .stat-card:hover,.stat-card:focus-visible{transform:translateY(-3px);border-color:rgba(255,255,255,.22);box-shadow:0 24px 70px rgba(0,0,0,.36);outline:none}
+    .mini{padding:24px;min-height:172px;text-align:left;width:100%;display:flex;flex-direction:column;gap:12px;justify-content:flex-start}
+    .mini > div:first-child{color:#d9e5f6;font-weight:800}
+    .mini .v{font-size:clamp(46px,5vw,72px);font-weight:900;margin-top:4px;color:var(--text);line-height:.95;letter-spacing:-.06em;text-shadow:0 12px 34px rgba(0,0,0,.35)}
+    .mini-copy{margin-top:auto;color:var(--muted);font-size:13px;line-height:1.4}
     .section{display:grid;grid-template-columns:1.25fr .95fr;gap:18px}
     .panel{padding:22px}
     .progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:12px 0 18px}
@@ -95,6 +110,7 @@
     .learn-tags span{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#d8e2f2}
     .phone{display:none}
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    #toast:empty{display:none}
     .action{padding:12px 16px;border-radius:999px;background:linear-gradient(135deg,rgba(56,189,248,.9),rgba(52,211,153,.8));color:#06111f;font-weight:700}
     .action.secondary{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--border)}
     .task-btn{width:100%;text-align:left;padding:14px 15px;border-radius:18px;background:rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--text)}
@@ -127,15 +143,18 @@
     @media (max-width:1100px){
       .wrap{grid-template-columns:1fr}
       .side{display:none}
+      .hero-grid{grid-template-columns:minmax(0,1fr) minmax(300px,.75fr)}
       .section,.grid4{grid-template-columns:1fr 1fr}
     }
     @media (max-width:720px){
       .wrap{padding:12px;gap:12px;padding-bottom:96px}
-      .hero{padding:18px 16px 16px}
+      .hero{padding:18px 16px 16px;min-height:auto}
       .hero-grid{grid-template-columns:1fr}
+      .hero-command{min-height:auto;gap:16px}
+      .orb-stack{display:none}
       .panel{padding:18px}
-      .mini{padding:16px;min-height:96px}
-      .mini .v{font-size:28px}
+      .mini{padding:18px;min-height:138px}
+      .mini .v{font-size:42px}
       .grid4,.section,.layout3{grid-template-columns:1fr}
       .section{gap:12px}
       .toolbar{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
@@ -150,21 +169,19 @@
         display:grid;position:fixed;left:12px;right:12px;bottom:12px;
         background:rgba(6,8,22,.92);backdrop-filter:blur(20px);
         border:1px solid var(--border);border-radius:22px;padding:10px;
-        grid-template-columns:repeat(5,1fr);gap:6px;z-index:10;
+        grid-template-columns:repeat(3,1fr);gap:6px;z-index:10;
         box-shadow:0 18px 60px rgba(0,0,0,.35)
       }
       .phone button{padding:11px 0;text-align:center;border-radius:16px;background:rgba(255,255,255,.04);font-size:11px;color:var(--text);border:0;line-height:1.15}
       .card,.side{border-radius:22px}
-      .hero h1{font-size:clamp(28px,9vw,44px)}
       .sub{font-size:14px;line-height:1.55}
-      .hero-copy{display:none}
-      .hero-copy-short{display:block;font-size:14px;line-height:1.55;color:var(--muted);margin-top:8px}
       .pill{padding:7px 12px;font-size:13px}
-      .hero-panel{padding:16px}
-      .hero-panel .panel-value{font-size:30px}
-      .hero-tiles{grid-template-columns:repeat(3,1fr);gap:10px}
+      .hero-panel{padding:16px;min-height:auto;gap:14px}
+      .hero-panel .panel-value{font-size:42px}
+      .hero-tiles{display:none}
       .hero-tile{padding:12px;border-radius:18px}
-      .hero-tile span{font-size:18px}
+      .hero-tile{min-height:78px}
+      .hero-tile span{font-size:26px}
     }
   </style>
 </head>
@@ -183,40 +200,43 @@
       </div>
     </aside>
     <main class="main">
-      <section class="card hero" id="overview">
-        <div class="hero-grid">
-          <div>
-            <div class="pill">✨ Dual Sync</div>
-            <div class="toolbar">
-              <button class="action" id="createTask">เพิ่มงาน</button>
-              <button class="action secondary" id="addDriveLink">เพิ่มลิงก์ Drive</button>
-              <label class="action secondary" for="uploadImage" style="display:inline-flex;align-items:center">อัปโหลดรูป</label>
-              <input id="uploadImage" type="file" accept="image/*" hidden>
-            </div>
-            <p id="toast" class="sub" style="min-height:1.2em;margin-top:14px"></p>
-          </div>
-          <div class="hero-panel">
-            <div class="panel-row">
-              <div>
-                <div class="panel-label">วันนี้</div>
-                <div class="panel-value">7/10</div>
+      <section class="overview-view section-view active" id="overview">
+        <section class="card hero">
+          <div class="hero-grid">
+            <div class="hero-command">
+              <div class="hero-actions">
+                <div class="pill">✨ Dual Sync</div>
+                <div class="toolbar">
+                  <button class="action" id="createTask">เพิ่มงาน</button>
+                  <button class="action secondary" id="addDriveLink">เพิ่มลิงก์ Drive</button>
+                  <label class="action secondary" for="uploadImage" style="display:inline-flex;align-items:center">อัปโหลดรูป</label>
+                  <input id="uploadImage" type="file" accept="image/*" hidden>
+                </div>
+                <p id="toast" class="sub" style="min-height:1.2em;margin:0"></p>
               </div>
-              <div class="pill" style="white-space:nowrap">พร้อมซิงก์</div>
+              <div class="orb-stack" aria-hidden="true"><span></span><span></span><span></span></div>
             </div>
-            <div class="hero-tiles">
-              <div class="hero-tile"><b>ทำแล้ว</b><span>7</span></div>
-              <div class="hero-tile"><b>เหลือ</b><span>3</span></div>
-              <div class="hero-tile"><b>คลัง</b><span>2</span></div>
+            <div class="hero-panel">
+              <div class="panel-row">
+                <div>
+                  <div class="panel-label">วันนี้</div>
+                  <div class="panel-value">7/10</div>
+                </div>
+                <div class="pill" style="white-space:nowrap">พร้อมซิงก์</div>
+              </div>
+              <div class="hero-tiles">
+                <div class="hero-tile"><b>ทำแล้ว</b><span>7</span></div>
+                <div class="hero-tile"><b>เหลือ</b><span>3</span></div>
+              </div>
             </div>
-            <div class="panel-note">ภาพรวมการทำงานวันนี้ถูกย่อมาให้อ่านง่าย เหมาะกับการเช็กสถานะเร็ว ๆ บนมือถือ</div>
           </div>
-        </div>
+        </section>
+        <section class="grid4">
+          <button class="card mini stat-card" data-stat="done" type="button"><div>งานที่ทำ</div><div class="v">7/10</div><div class="mini-copy">แตะเพื่อดูรายการงานที่ทำแล้ว</div></button>
+          <button class="card mini stat-card" data-stat="remaining" type="button"><div>งานที่เหลือ</div><div class="v">3/10</div><div class="mini-copy">แตะเพื่อดูงานที่ยังรอทำ</div></button>
+        </section>
       </section>
-      <section class="grid4">
-        <button class="card mini stat-card" data-stat="done" type="button"><div>งานที่ทำ</div><div class="v">7/10</div><div class="mini-copy">แตะเพื่อดูรายการงานที่ทำแล้ว</div></button>
-        <button class="card mini stat-card" data-stat="remaining" type="button"><div>งานที่เหลือ</div><div class="v">3/10</div><div class="mini-copy">แตะเพื่อดูงานที่ยังรอทำ</div></button>
-      </section>
-      <section class="section section-view active" id="work">
+      <section class="section section-view" id="work">
         <div class="card panel">
           <div style="display:flex;justify-content:space-between;gap:12px;align-items:end">
             <div><div style="font-size:22px;font-weight:700">ภาพรวมสถานะ</div><div style="color:var(--muted);margin-top:6px">แตะเพื่อเปลี่ยนสถานะและส่งสรุปได้</div></div>
@@ -330,7 +350,8 @@
       if (!url) return false;
       await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ action, source: 'web', ...payload }),
       });
       return true;
@@ -339,7 +360,6 @@
     const setTab = (tab) => {
       document.querySelectorAll('[data-tab]').forEach(el => el.classList.toggle('active', el.dataset.tab === tab));
       document.querySelectorAll('.section-view').forEach(el => el.classList.toggle('active', el.id === tab));
-      showToast(`เปิดส่วน ${tab}`);
     };
     document.querySelectorAll('[data-tab]').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
     const learnCards = Array.from(document.querySelectorAll('.learn-card'));
