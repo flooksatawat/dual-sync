@@ -58,6 +58,8 @@
     .section-view{display:none}
     .section-view.active{display:grid}
     .hidden-by-tab{display:none}
+    .config{padding:12px 16px;border-radius:18px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--text)}
+    .config code{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:340px;display:inline-block}
     @media (max-width:1100px){.wrap{grid-template-columns:1fr}.side{display:none}.section,.grid4{grid-template-columns:1fr 1fr}}
     @media (max-width:720px){.grid4,.section,.layout3{grid-template-columns:1fr}.wrap{padding:12px}.phone{display:block;position:sticky;bottom:10px;background:rgba(6,8,22,.92);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:22px;padding:10px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.phone button{padding:10px 0;text-align:center;border-radius:16px;background:rgba(255,255,255,.04);font-size:12px;color:var(--text);border:0}}
   </style>
@@ -93,6 +95,15 @@
         <div class="card mini"><div>งานที่ทำ</div><div class="v">7</div></div>
         <div class="card mini"><div>งานที่เหลือ</div><div class="v">3</div></div>
         <div class="card mini"><div>คลังข้อมูล</div><div class="v">2</div></div>
+      </section>
+      <section class="card panel" style="margin-bottom:0">
+        <div class="config">
+          <div>
+            <div style="font-weight:700">เชื่อมต่อ Apps Script</div>
+            <div style="color:var(--muted);font-size:13px">เก็บข้อมูลลง Google Sheets และส่ง LINE เมื่อมีการเพิ่มลิงก์/เปลี่ยนสถานะ/อัปโหลดไฟล์</div>
+          </div>
+          <code id="backendLabel">ยังไม่เชื่อมต่อ</code>
+        </div>
       </section>
       <section class="section section-view active" id="work">
         <div class="card panel">
@@ -142,7 +153,22 @@
     </main>
   </div>
   <script>
+    const BACKEND_KEY = 'duosync_backend_url';
     const toast = document.getElementById('toast');
+    const backendLabel = document.getElementById('backendLabel');
+    const backendUrl = localStorage.getItem(BACKEND_KEY) || '';
+    if (backendUrl) backendLabel.textContent = backendUrl;
+    const syncBackendLabel = () => { backendLabel.textContent = localStorage.getItem(BACKEND_KEY) || 'ยังไม่เชื่อมต่อ'; };
+    const postBackend = async (action, payload = {}) => {
+      const url = localStorage.getItem(BACKEND_KEY);
+      if (!url) return false;
+      await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, source: 'web', ...payload }),
+      });
+      return true;
+    };
     const showToast = (msg) => { toast.textContent = msg; clearTimeout(window._toastTimer); window._toastTimer = setTimeout(() => toast.textContent = '', 2600); };
     const setTab = (tab) => {
       document.querySelectorAll('[data-tab]').forEach(el => el.classList.toggle('active', el.dataset.tab === tab));
@@ -150,17 +176,29 @@
       showToast(`เปิดส่วน ${tab}`);
     };
     document.querySelectorAll('[data-tab]').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
-    document.getElementById('addDriveLink').addEventListener('click', () => showToast('เพิ่มลิงก์ Google Drive แล้ว (เดโม)'));
-    document.getElementById('lineDemo').addEventListener('click', () => showToast('ทดสอบส่งข้อความไป LINE แล้ว (เดโม)'));
+    document.getElementById('addDriveLink').addEventListener('click', async () => {
+      const link = prompt('วางลิงก์ Google Drive');
+      if (!link) return;
+      const ok = await postBackend('add_link', { title: 'Google Drive link', url: link, detail: link });
+      showToast(ok ? 'บันทึกลิงก์ลง Google Sheets แล้ว' : 'บันทึกลิงก์แบบเดโม (ยังไม่เชื่อม Apps Script)');
+    });
+    document.getElementById('lineDemo').addEventListener('click', async () => {
+      const ok = await postBackend('summary', { title: 'ทดสอบส่งข้อความ', detail: 'LINE notification test' });
+      showToast(ok ? 'ส่งข้อความผ่าน Apps Script แล้ว' : 'ทดสอบส่งข้อความไป LINE แล้ว (เดโม)');
+    });
     document.getElementById('uploadImage').addEventListener('change', (e) => {
       const file = e.target.files && e.target.files[0];
-      if (file) showToast(`อัปโหลด ${file.name} แล้ว`);
+      if (!file) return;
+      postBackend('upload_file', { title: file.name, detail: 'image upload' }).catch(() => {});
+      showToast(`อัปโหลด ${file.name} แล้ว`);
     });
     document.querySelectorAll('.task-btn').forEach(btn => btn.addEventListener('click', () => {
       const task = btn.dataset.task;
+      postBackend('status_change', { title: task, detail: 'task updated' }).catch(() => {});
       showToast(`เปลี่ยนสถานะ: ${task}`);
     }));
     setTab('overview');
+    syncBackendLabel();
   </script>
 </body>
 </html>
