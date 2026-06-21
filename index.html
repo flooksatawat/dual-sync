@@ -34,6 +34,8 @@
     .hero h1{font-size:clamp(34px,5vw,64px);line-height:1.02;margin:14px 0 10px}
     .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:#cfe8ff}
     .sub{max-width:840px;color:var(--muted);font-size:16px;line-height:1.7}
+    .hero-copy{max-width:760px}
+    .hero-copy-short{display:none}
     .grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .mini{padding:18px;min-height:112px;text-align:left;width:100%;display:flex;flex-direction:column;justify-content:space-between}
     .mini .v{font-size:34px;font-weight:800;margin-top:10px}
@@ -87,14 +89,15 @@
     }
     @media (max-width:720px){
       .wrap{padding:12px;gap:12px;padding-bottom:96px}
-      .hero{padding:18px}
+      .hero{padding:18px 16px 16px}
       .panel{padding:18px}
       .mini{padding:16px;min-height:96px}
       .mini .v{font-size:28px}
       .grid4,.section,.layout3{grid-template-columns:1fr}
       .section{gap:12px}
-      .toolbar{display:grid;grid-template-columns:1fr;gap:8px}
+      .toolbar{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
       .action,.action.secondary,.chip-link,.tiny-btn,.task-btn{width:100%}
+      .action,.action.secondary{padding:14px 16px;border-radius:18px}
       .task-btn{padding:14px 14px;gap:8px;align-items:flex-start;flex-direction:column}
       .task-btn span:last-child{opacity:.8}
       .item-actions{display:grid;grid-template-columns:1fr 1fr}
@@ -110,7 +113,10 @@
       .phone button{padding:11px 0;text-align:center;border-radius:16px;background:rgba(255,255,255,.04);font-size:11px;color:var(--text);border:0;line-height:1.15}
       .card,.side{border-radius:22px}
       .hero h1{font-size:clamp(28px,9vw,44px)}
-      .sub{font-size:14px;line-height:1.6}
+      .sub{font-size:14px;line-height:1.55}
+      .hero-copy{display:none}
+      .hero-copy-short{display:block;font-size:14px;line-height:1.55;color:var(--muted);margin-top:8px}
+      .pill{padding:7px 12px;font-size:13px}
     }
   </style>
 </head>
@@ -133,7 +139,8 @@
     <main class="main">
       <section class="card hero" id="overview">
         <div class="pill">✨ Dual Sync</div>
-        <div class="sub">เก็บลิงก์ รูป ไฟล์ สถานะงาน และสิ่งที่ต้องเรียนรู้ไว้ในที่เดียว พร้อมออกแบบให้ใช้งานได้ดีทั้งมือถือและคอมพิวเตอร์</div>
+        <div class="sub hero-copy">เก็บลิงก์ รูป ไฟล์ สถานะงาน และสิ่งที่ต้องเรียนรู้ไว้ในที่เดียว พร้อมออกแบบให้ใช้งานได้ดีทั้งมือถือและคอมพิวเตอร์</div>
+        <div class="hero-copy-short">เก็บงาน ลิงก์ และไฟล์ไว้ที่เดียว ใช้งานง่ายบนมือถือ</div>
         <div class="toolbar">
           <button class="action" id="createTask">เพิ่มงาน</button>
           <button class="action secondary" id="addDriveLink">เพิ่มลิงก์ Drive</button>
