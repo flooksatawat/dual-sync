@@ -173,9 +173,11 @@
     const BACKEND_KEY = 'duosync_backend_url';
     const toast = document.getElementById('toast');
     const backendLabel = document.getElementById('backendLabel');
-    const backendUrl = localStorage.getItem(BACKEND_KEY) || '';
+    const DEFAULT_BACKEND_URL = 'https://script.google.com/macros/s/AKfycby4zfe7zMCkAQhvYMWp-AOtygffDLG92NC4mYBKEBrcFELk-FHLjc_gDCgmX2XoGGEi/exec';
+    const backendUrl = localStorage.getItem(BACKEND_KEY) || DEFAULT_BACKEND_URL;
+    if (!localStorage.getItem(BACKEND_KEY)) localStorage.setItem(BACKEND_KEY, backendUrl);
     if (backendUrl) backendLabel.textContent = backendUrl;
-    const syncBackendLabel = () => { backendLabel.textContent = localStorage.getItem(BACKEND_KEY) || 'ยังไม่เชื่อมต่อ'; };
+    const syncBackendLabel = () => { backendLabel.textContent = localStorage.getItem(BACKEND_KEY) || DEFAULT_BACKEND_URL; };
     const postBackend = async (action, payload = {}) => {
       const url = localStorage.getItem(BACKEND_KEY);
       if (!url) return false;
