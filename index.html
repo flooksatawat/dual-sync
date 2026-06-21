@@ -87,6 +87,12 @@
     .board{padding:18px;width:100%;min-height:160px;display:flex;flex-direction:column;justify-content:space-between}
     .status{color:#aeb8c7;font-size:12px;letter-spacing:.22em;text-transform:uppercase;display:flex;justify-content:space-between}
     .card-item{padding:16px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-top:14px}
+    .tag-bar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+    .tag-chip{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--text);font-size:12px;cursor:pointer}
+    .tag-chip.active{background:linear-gradient(135deg,rgba(56,189,248,.28),rgba(217,70,239,.22));box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+    .learn-card{display:grid;gap:12px}
+    .learn-tags{display:flex;gap:8px;flex-wrap:wrap}
+    .learn-tags span{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#d8e2f2}
     .phone{display:none}
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
     .action{padding:12px 16px;border-radius:999px;background:linear-gradient(135deg,rgba(56,189,248,.9),rgba(52,211,153,.8));color:#06111f;font-weight:700}
@@ -252,18 +258,29 @@
         </div>
       </section>
       <section class="layout3 section-view" id="learn">
-        <div class="card board">
+        <div class="tag-bar" id="learnTagBar">
+          <button class="tag-chip active" type="button" data-learn-tag="all">ทั้งหมด</button>
+          <button class="tag-chip" type="button" data-learn-tag="workflow">Workflow</button>
+          <button class="tag-chip" type="button" data-learn-tag="drive">Drive</button>
+          <button class="tag-chip" type="button" data-learn-tag="script">Apps Script</button>
+          <button class="tag-chip" type="button" data-learn-tag="notify">Notify</button>
+          <button class="tag-chip" type="button" data-learn-tag="mobile">Mobile</button>
+        </div>
+        <div class="card board learn-card" data-learn-tags="workflow,script">
           <div class="status"><span>learning • topic 1</span><span>01</span></div>
+          <div class="learn-tags"><span>Workflow</span><span>Script</span></div>
           <div class="card-item"><b>พื้นฐานการทำงานร่วมกัน</b><div style="color:var(--muted);margin-top:8px">วางขอบเขตงาน แบ่งหน้าที่ และสื่อสารให้ชัดเจน</div></div>
           <div class="card-item"><b>โครงสร้างข้อมูล</b><div style="color:var(--muted);margin-top:8px">จัดเก็บลิงก์ ไฟล์ และสถานะงานให้ค้นหาง่าย</div></div>
         </div>
-        <div class="card board">
+        <div class="card board learn-card" data-learn-tags="drive,workflow">
           <div class="status"><span>learning • topic 2</span><span>02</span></div>
+          <div class="learn-tags"><span>Drive</span><span>Workflow</span></div>
           <div class="card-item"><b>Google Drive Workflow</b><div style="color:var(--muted);margin-top:8px">ใช้ Drive เป็นคลังกลางให้เข้าถึงข้ามอุปกรณ์</div></div>
           <div class="card-item"><b>Apps Script Integration</b><div style="color:var(--muted);margin-top:8px">ส่งข้อมูลเข้า Sheets เบื้องหลังอัตโนมัติ</div></div>
         </div>
-        <div class="card board">
+        <div class="card board learn-card" data-learn-tags="notify,mobile">
           <div class="status"><span>learning • topic 3</span><span>03</span></div>
+          <div class="learn-tags"><span>Notify</span><span>Mobile</span></div>
           <div class="card-item"><b>การแจ้งเตือน</b><div style="color:var(--muted);margin-top:8px">สรุปสถานะและแจ้งเตือนเมื่อข้อมูลเปลี่ยน</div></div>
           <div class="card-item"><b>การใช้งานมือถือ</b><div style="color:var(--muted);margin-top:8px">ออกแบบให้แตะง่าย อ่านชัด และไม่อึดอัด</div></div>
         </div>
@@ -326,6 +343,18 @@
       showToast(`เปิดส่วน ${tab}`);
     };
     document.querySelectorAll('[data-tab]').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+    const learnCards = Array.from(document.querySelectorAll('.learn-card'));
+    const learnTagButtons = Array.from(document.querySelectorAll('[data-learn-tag]'));
+    const setLearnFilter = (tag) => {
+      learnTagButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.learnTag === tag));
+      learnCards.forEach(card => {
+        const tags = (card.dataset.learnTags || '').split(',').map(s => s.trim()).filter(Boolean);
+        const visible = tag === 'all' || tags.includes(tag);
+        card.style.display = visible ? '' : 'none';
+      });
+      showToast(tag === 'all' ? 'แสดงทุกหมวด' : `แสดงหมวด ${tag}`);
+    };
+    learnTagButtons.forEach(btn => btn.addEventListener('click', () => setLearnFilter(btn.dataset.learnTag)));
     const upsertItem = async (kind, title, detail, url = '', status = '') => {
       const id = `${kind}-${Date.now()}`;
       const ok = await postBackend(kind === 'link' ? 'add_link' : 'create', { id, kind, title, detail, url, status });
