@@ -62,8 +62,38 @@
     .hidden-by-tab{display:none}
     .config{padding:12px 16px;border-radius:18px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--text)}
     .config code{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:340px;display:inline-block}
-    @media (max-width:1100px){.wrap{grid-template-columns:1fr}.side{display:none}.section,.grid4{grid-template-columns:1fr 1fr}}
-    @media (max-width:720px){.grid4,.section,.layout3{grid-template-columns:1fr}.wrap{padding:12px}.phone{display:block;position:sticky;bottom:10px;background:rgba(6,8,22,.92);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:22px;padding:10px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.phone button{padding:10px 0;text-align:center;border-radius:16px;background:rgba(255,255,255,.04);font-size:12px;color:var(--text);border:0}}
+    @media (max-width:1100px){
+      .wrap{grid-template-columns:1fr}
+      .side{display:none}
+      .section,.grid4{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:720px){
+      .wrap{padding:12px;gap:12px;padding-bottom:96px}
+      .hero{padding:18px}
+      .panel{padding:18px}
+      .mini{padding:16px;min-height:96px}
+      .mini .v{font-size:28px}
+      .grid4,.section,.layout3{grid-template-columns:1fr}
+      .section{gap:12px}
+      .toolbar{display:grid;grid-template-columns:1fr;gap:8px}
+      .action,.action.secondary,.chip-link,.tiny-btn,.task-btn{width:100%}
+      .task-btn{padding:14px 14px;gap:8px;align-items:flex-start;flex-direction:column}
+      .task-btn span:last-child{opacity:.8}
+      .item-actions{display:grid;grid-template-columns:1fr 1fr}
+      .config{flex-direction:column;align-items:flex-start}
+      .config code{max-width:100%}
+      .phone{
+        display:grid;position:fixed;left:12px;right:12px;bottom:12px;
+        background:rgba(6,8,22,.92);backdrop-filter:blur(20px);
+        border:1px solid var(--border);border-radius:22px;padding:10px;
+        grid-template-columns:repeat(5,1fr);gap:6px;z-index:10;
+        box-shadow:0 18px 60px rgba(0,0,0,.35)
+      }
+      .phone button{padding:11px 0;text-align:center;border-radius:16px;background:rgba(255,255,255,.04);font-size:11px;color:var(--text);border:0;line-height:1.15}
+      .card,.side{border-radius:22px}
+      .hero h1{font-size:clamp(28px,9vw,44px)}
+      .sub{font-size:14px;line-height:1.6}
+    }
   </style>
 </head>
 <body>
