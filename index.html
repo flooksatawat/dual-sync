@@ -30,12 +30,48 @@
     .avatars span{width:42px;height:42px;border-radius:14px;border:2px solid #09101f;display:inline-block;background:linear-gradient(135deg,#4f8cff,#7c3aed)}
     .avatars span:last-child{margin-left:-12px;background:linear-gradient(135deg,#f472b6,#a855f7)}
     .main{display:grid;gap:24px}
-    .hero{padding:28px}
+    .hero{padding:28px;position:relative;overflow:hidden}
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-20% -10% auto auto;
+      width:260px;height:260px;
+      background:radial-gradient(circle, rgba(56,189,248,.22), transparent 62%);
+      filter:blur(8px);
+      pointer-events:none;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:-80px;bottom:-100px;
+      width:240px;height:240px;
+      background:radial-gradient(circle, rgba(217,70,239,.18), transparent 65%);
+      filter:blur(12px);
+      pointer-events:none;
+    }
+    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.85fr);gap:22px;align-items:start}
     .hero h1{font-size:clamp(34px,5vw,64px);line-height:1.02;margin:14px 0 10px}
     .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:#cfe8ff}
     .sub{max-width:840px;color:var(--muted);font-size:16px;line-height:1.7}
     .hero-copy{max-width:760px}
     .hero-copy-short{display:none}
+    .hero-panel{
+      align-self:stretch;
+      padding:18px;
+      border-radius:24px;
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.25);
+      display:grid;gap:14px;justify-content:space-between
+    }
+    .hero-panel .panel-row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .hero-panel .panel-label{color:var(--muted);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+    .hero-panel .panel-value{font-size:36px;font-weight:800;line-height:1}
+    .hero-panel .panel-note{color:var(--muted);font-size:13px;line-height:1.5}
+    .hero-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .hero-tile{padding:14px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+    .hero-tile b{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px}
+    .hero-tile span{font-size:22px;font-weight:800}
     .grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .mini{padding:18px;min-height:112px;text-align:left;width:100%;display:flex;flex-direction:column;justify-content:space-between}
     .mini .v{font-size:34px;font-weight:800;margin-top:10px}
@@ -90,6 +126,7 @@
     @media (max-width:720px){
       .wrap{padding:12px;gap:12px;padding-bottom:96px}
       .hero{padding:18px 16px 16px}
+      .hero-grid{grid-template-columns:1fr}
       .panel{padding:18px}
       .mini{padding:16px;min-height:96px}
       .mini .v{font-size:28px}
@@ -117,6 +154,11 @@
       .hero-copy{display:none}
       .hero-copy-short{display:block;font-size:14px;line-height:1.55;color:var(--muted);margin-top:8px}
       .pill{padding:7px 12px;font-size:13px}
+      .hero-panel{padding:16px}
+      .hero-panel .panel-value{font-size:30px}
+      .hero-tiles{grid-template-columns:repeat(3,1fr);gap:10px}
+      .hero-tile{padding:12px;border-radius:18px}
+      .hero-tile span{font-size:18px}
     }
   </style>
 </head>
@@ -138,16 +180,36 @@
     </aside>
     <main class="main">
       <section class="card hero" id="overview">
-        <div class="pill">✨ Dual Sync</div>
-        <div class="sub hero-copy">เก็บลิงก์ รูป ไฟล์ สถานะงาน และสิ่งที่ต้องเรียนรู้ไว้ในที่เดียว พร้อมออกแบบให้ใช้งานได้ดีทั้งมือถือและคอมพิวเตอร์</div>
-        <div class="hero-copy-short">เก็บงาน ลิงก์ และไฟล์ไว้ที่เดียว ใช้งานง่ายบนมือถือ</div>
-        <div class="toolbar">
-          <button class="action" id="createTask">เพิ่มงาน</button>
-          <button class="action secondary" id="addDriveLink">เพิ่มลิงก์ Drive</button>
-          <label class="action secondary" for="uploadImage" style="display:inline-flex;align-items:center">อัปโหลดรูป</label>
-          <input id="uploadImage" type="file" accept="image/*" hidden>
+        <div class="hero-grid">
+          <div>
+            <div class="pill">✨ Dual Sync</div>
+            <h1 style="margin-top:14px;margin-bottom:10px">พื้นที่ทำงานสองคนที่ดูดี มีมิติ และใช้งานได้จริง</h1>
+            <div class="sub hero-copy">เก็บลิงก์ รูป ไฟล์ สถานะงาน และสิ่งที่ต้องเรียนรู้ไว้ในที่เดียว พร้อมออกแบบให้ใช้งานได้ดีทั้งมือถือและคอมพิวเตอร์</div>
+            <div class="hero-copy-short">เก็บงาน ลิงก์ และไฟล์ไว้ที่เดียว ใช้งานง่ายบนมือถือ</div>
+            <div class="toolbar">
+              <button class="action" id="createTask">เพิ่มงาน</button>
+              <button class="action secondary" id="addDriveLink">เพิ่มลิงก์ Drive</button>
+              <label class="action secondary" for="uploadImage" style="display:inline-flex;align-items:center">อัปโหลดรูป</label>
+              <input id="uploadImage" type="file" accept="image/*" hidden>
+            </div>
+            <p id="toast" class="sub" style="min-height:1.2em;margin-top:14px"></p>
+          </div>
+          <div class="hero-panel">
+            <div class="panel-row">
+              <div>
+                <div class="panel-label">วันนี้</div>
+                <div class="panel-value">7/10</div>
+              </div>
+              <div class="pill" style="white-space:nowrap">พร้อมซิงก์</div>
+            </div>
+            <div class="hero-tiles">
+              <div class="hero-tile"><b>ทำแล้ว</b><span>7</span></div>
+              <div class="hero-tile"><b>เหลือ</b><span>3</span></div>
+              <div class="hero-tile"><b>คลัง</b><span>2</span></div>
+            </div>
+            <div class="panel-note">ภาพรวมการทำงานวันนี้ถูกย่อมาให้อ่านง่าย เหมาะกับการเช็กสถานะเร็ว ๆ บนมือถือ</div>
+          </div>
         </div>
-        <p id="toast" class="sub" style="min-height:1.2em;margin-top:14px"></p>
       </section>
       <section class="grid4">
         <button class="card mini stat-card" data-stat="done" type="button"><div>งานที่ทำ</div><div class="v">7/10</div><div class="mini-copy">แตะเพื่อดูรายการงานที่ทำแล้ว</div></button>
