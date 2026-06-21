@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dual Sync Preview</title>
+  <style>
+    :root{
+      --bg:#060816; --panel:rgba(255,255,255,.07); --border:rgba(255,255,255,.12);
+      --text:#e8edf7; --muted:#92a0b6; --sky:#38bdf8; --fuchsia:#d946ef; --emerald:#34d399;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:
+      radial-gradient(circle at 10% 10%, rgba(56,189,248,.22), transparent 28%),
+      radial-gradient(circle at 85% 20%, rgba(217,70,239,.18), transparent 25%),
+      radial-gradient(circle at 40% 90%, rgba(52,211,153,.12), transparent 25%), var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:1440px;margin:0 auto;padding:24px;display:grid;grid-template-columns:280px 1fr;gap:24px;min-height:100vh}
+    .side,.card{background:var(--panel);backdrop-filter:blur(24px);border:1px solid var(--border);box-shadow:0 18px 60px rgba(0,0,0,.35);border-radius:28px}
+    .side{padding:24px;display:flex;flex-direction:column}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,var(--sky),var(--fuchsia));display:grid;place-items:center;font-weight:800}
+    .nav{margin-top:28px;display:grid;gap:10px}
+    .nav div{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.04)}
+    .footer{margin-top:auto;padding-top:18px;border-top:1px solid var(--border);display:flex;gap:12px;align-items:center}
+    .avatars{display:flex}
+    .avatars span{width:42px;height:42px;border-radius:14px;border:2px solid #09101f;display:inline-block;background:linear-gradient(135deg,#4f8cff,#7c3aed)}
+    .avatars span:last-child{margin-left:-12px;background:linear-gradient(135deg,#f472b6,#a855f7)}
+    .main{display:grid;gap:24px}
+    .hero{padding:28px}
+    .hero h1{font-size:clamp(34px,5vw,64px);line-height:1.02;margin:14px 0 10px}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:#cfe8ff}
+    .sub{max-width:840px;color:var(--muted);font-size:16px;line-height:1.7}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .mini{padding:18px;min-height:112px}
+    .mini .v{font-size:34px;font-weight:800;margin-top:10px}
+    .section{display:grid;grid-template-columns:1.25fr .95fr;gap:18px}
+    .panel{padding:22px}
+    .progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:12px 0 18px}
+    .bar{height:100%;border-radius:999px}
+    .task{padding:14px 15px;border-radius:18px;background:rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+    .work{background:linear-gradient(90deg,#38bdf8,#22d3ee)}
+    .learn{background:linear-gradient(90deg,#d946ef,#8b5cf6)}
+    .layout3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .board{padding:18px}
+    .status{color:#aeb8c7;font-size:12px;letter-spacing:.22em;text-transform:uppercase;display:flex;justify-content:space-between}
+    .card-item{padding:16px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-top:14px}
+    .phone{display:none}
+    @media (max-width:1100px){.wrap{grid-template-columns:1fr}.side{display:none}.section,.grid4,.layout3{grid-template-columns:1fr 1fr}}
+    @media (max-width:720px){.grid4,.section,.layout3{grid-template-columns:1fr}.wrap{padding:12px}.phone{display:block;position:sticky;bottom:10px;background:rgba(6,8,22,.92);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:22px;padding:10px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.phone div{padding:10px 0;text-align:center;border-radius:16px;background:rgba(255,255,255,.04);font-size:12px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="side">
+      <div class="brand"><div class="logo">DS</div><div><div style="font-size:20px;font-weight:700">Dual Sync</div><div style="color:var(--muted);font-size:12px">2-person collaboration hub</div></div></div>
+      <div class="nav">
+        <div>ภาพรวม</div><div>งาน</div><div>เรียนรู้</div><div>คลังข้อมูล</div><div>อัปเดต</div>
+      </div>
+      <div class="footer">
+        <div class="avatars"><span></span><span></span></div>
+        <div><div>2 คนออนไลน์</div><div style="color:var(--muted);font-size:12px">พร้อมซิงก์และแจ้งเตือน</div></div>
+      </div>
+    </aside>
+    <main class="main">
+      <section class="card hero">
+        <div class="pill">✨ Dual Sync</div>
+        <div class="sub">เก็บลิงก์ รูป ไฟล์ สถานะงาน และสิ่งที่ต้องเรียนรู้ไว้ในที่เดียว พร้อมออกแบบให้ใช้งานได้ดีทั้งมือถือและคอมพิวเตอร์</div>
+      </section>
+      <section class="grid4">
+        <div class="card mini"><div>Progress งาน</div><div class="v">70%</div></div>
+        <div class="card mini"><div>Progress เรียนรู้</div><div class="v">20%</div></div>
+        <div class="card mini"><div>คลังข้อมูล</div><div class="v">2</div></div>
+        <div class="card mini"><div>แจ้งเตือน</div><div class="v">LINE</div></div>
+      </section>
+      <section class="section">
+        <div class="card panel">
+          <div style="display:flex;justify-content:space-between;gap:12px;align-items:end">
+            <div><div style="font-size:22px;font-weight:700">ภาพรวมสถานะ</div><div style="color:var(--muted);margin-top:6px">แตะเพื่อเปลี่ยนสถานะและส่งสรุปได้</div></div>
+            <div style="display:flex;gap:10px">
+              <div class="card" style="padding:12px 16px"><div style="font-size:12px;color:var(--muted)">Done</div><div style="font-size:24px;font-weight:700">1</div></div>
+              <div class="card" style="padding:12px 16px"><div style="font-size:12px;color:var(--muted)">Open</div><div style="font-size:24px;font-weight:700">4</div></div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px">
+            <div class="card" style="padding:16px;background:rgba(56,189,248,.08)"><div style="display:flex;justify-content:space-between"><span>งาน</span><span>70%</span></div><div class="progress"><div class="bar work" style="width:70%"></div></div></div>
+            <div class="card" style="padding:16px;background:rgba(217,70,239,.08)"><div style="display:flex;justify-content:space-between"><span>เรียนรู้</span><span>20%</span></div><div class="progress"><div class="bar learn" style="width:20%"></div></div></div>
+          </div>
+          <div class="task"><div>วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</div><div>user1</div></div>
+          <div class="task"><div>ออกแบบหน้า Home สำหรับมือถือ</div><div>user2</div></div>
+          <div class="task"><div>ทบทวน Google Drive structure</div><div>user1</div></div>
+        </div>
+        <div class="card panel">
+          <div style="font-size:22px;font-weight:700">โครงสร้างการใช้งานจริง</div>
+          <div class="card-item"><b>Google Drive</b><div style="color:var(--muted);margin-top:8px">ใช้เป็นแหล่งเก็บกลางสำหรับงาน เรียนรู้ และคลังอ้างอิง</div></div>
+          <div class="card-item"><b>LINE</b><div style="color:var(--muted);margin-top:8px">ส่งสถานะสำคัญ เช่น เสร็จงาน เพิ่มลิงก์ใหม่ และสรุปรายวัน</div></div>
+          <div class="card-item"><b>Responsive</b><div style="color:var(--muted);margin-top:8px">Mobile-first, กดง่าย, อ่านชัด, ใช้ได้ทั้ง Windows และ Mac</div></div>
+        </div>
+      </section>
+      <section class="layout3">
+        <div class="card board"><div class="status"><span>งาน • todo</span><span>2</span></div><div class="card-item">เตรียม milestone รอบแรก</div></div>
+        <div class="card board"><div class="status"><span>งาน • doing</span><span>1</span></div><div class="card-item">ออกแบบหน้า Home สำหรับมือถือ</div></div>
+        <div class="card board"><div class="status"><span>งาน • done</span><span>1</span></div><div class="card-item">วางโครงข้อมูลและสิทธิ์การใช้งาน 2 คน</div></div>
+      </section>
+      <section class="card panel">
+        <div style="font-size:22px;font-weight:700">ข้อเสนอให้สมบูรณ์แบบขึ้น</div>
+        <ol style="line-height:1.9;color:var(--text)">
+          <li>เชื่อม backend จริงด้วย Google Apps Script หรือ Firebase</li>
+          <li>ทำ permission แบบ 2 users only พร้อม activity log</li>
+          <li>เพิ่มแจ้งเตือนอัตโนมัติผ่าน LINE</li>
+          <li>ทำ drag-and-drop สำหรับ card และอัปโหลดไฟล์เข้าลิงก์ Drive โดยตรง</li>
+        </ol>
+      </section>
+      <div class="phone">
+        <div>ภาพรวม</div><div>งาน</div><div>เรียนรู้</div><div>ข้อมูล</div><div>อัปเดต</div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
