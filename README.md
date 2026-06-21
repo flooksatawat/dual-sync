@@ -1,6 +1,6 @@
 # Dual Sync
 
-Web app สำหรับแชร์ข้อมูลร่วมกันระหว่าง 2 คน โดยใช้ Google Sheets + Apps Script เป็น backend และส่งแจ้งเตือนผ่าน LINE เมื่อมีการเพิ่มลิงก์, เปลี่ยนสถานะ, หรืออัปโหลดไฟล์
+Web app สำหรับแชร์ข้อมูลร่วมกันระหว่าง 2 คน โดยใช้หน้าเว็บเป็นจุดใช้งานหลักทั้งหมด ส่วน Google Sheets ใช้เป็นที่เก็บข้อมูลกลางเท่านั้น และส่งแจ้งเตือนผ่าน LINE เมื่อมีการเพิ่มลิงก์, เปลี่ยนสถานะ, หรืออัปโหลดไฟล์
 
 ## บัญชีหลัก
 
@@ -8,7 +8,7 @@ Web app สำหรับแชร์ข้อมูลร่วมกันร
 
 ## โครงสร้างข้อมูล
 
-- `Google Sheets` เป็นฐานข้อมูลกลาง
+- `Google Sheets` เป็นฐานข้อมูลกลางสำหรับเก็บข้อมูลเท่านั้น
 - `Google Drive` เก็บรูปและไฟล์แนบ
 - `LINE Messaging API` ใช้ส่งแจ้งเตือน
 
@@ -84,6 +84,8 @@ localStorage.setItem('duosync_backend_url', 'https://script.google.com/macros/s/
 - append ข้อมูลลง Google Sheets
 - ส่ง LINE แจ้งเตือนตาม action
 
+ผู้ใช้ทำงานทั้งหมดผ่านหน้าเว็บ `https://flooksatawat.github.io/dual-sync/`
+
 ## โครงคอลัมน์ในชีต
 
 Sheet จะถูกสร้าง/ใช้งานด้วย headers:
@@ -109,4 +111,3 @@ Sheet จะถูกสร้าง/ใช้งานด้วย headers:
 - [Properties Service](https://developers.google.com/apps-script/guides/properties)
 - [SpreadsheetApp reference](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app)
 - [LINE Messaging API](https://developers.line.biz/en/docs/messaging-api/)
-
