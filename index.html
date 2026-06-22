@@ -230,7 +230,9 @@
                   <button class="action" id="createTask">เพิ่มงาน</button>
                   <button class="action secondary" id="addDriveLink">เพิ่มลิงก์ Drive</button>
                   <label class="action secondary" for="uploadImage" style="display:inline-flex;align-items:center">อัปโหลดรูป</label>
+                  <label class="action secondary" for="uploadVideo" style="display:inline-flex;align-items:center">อัปโหลดวิดีโอ</label>
                   <input id="uploadImage" type="file" accept="image/*" hidden>
+                  <input id="uploadVideo" type="file" accept="video/*" hidden>
                 </div>
                 <p id="toast" class="sub" style="min-height:1.2em;margin:0"></p>
               </div>
@@ -423,6 +425,18 @@
     learnTagButtons.forEach(btn => btn.addEventListener('click', () => setLearnFilter(btn.dataset.learnTag)));
     const learnTagList = ['ai', 'mindset'];
     const formatLearnTagLabel = (tag) => tag === 'ai' ? 'AI' : tag === 'mindset' ? 'Mindset' : tag;
+    const escapeHtml = (value = '') => String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+    const fileToBase64 = (file) => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ''));
+      reader.onerror = () => reject(reader.error || new Error('Failed to read file'));
+      reader.readAsDataURL(file);
+    });
     const renderLearnTagList = (selected = []) => `
       <div class="detail-list">
         ${learnTagList.map(tag => {
@@ -454,6 +468,14 @@
       );
       modal.dataset.editLearnTarget = btn.dataset.editLearnTags || '';
     }));
+    document.getElementById('addDriveLink').addEventListener('click', () => {
+      openModal(
+        'เพิ่มลิงก์',
+        '<label class="modal-field"><span>ลิงก์</span><input id="linkInput" type="url" placeholder="https://drive.google.com/..."></label><label class="modal-field"><span>ชื่อ</span><input id="linkTitleInput" type="text" placeholder="เช่น โฟลเดอร์งานหลัก"></label><div class="modal-field"><span>บันทึกไปที่</span><div class="detail-list"><label class="detail-item" style="justify-content:flex-start;gap:12px"><input type="radio" name="linkTarget" value="work" checked style="width:18px;height:18px;accent-color:#38bdf8"><span>งาน</span></label><label class="detail-item" style="justify-content:flex-start;gap:12px"><input type="radio" name="linkTarget" value="learn" style="width:18px;height:18px;accent-color:#38bdf8"><span>การเรียนรู้</span></label></div></div>',
+        '<button class="action secondary" type="button" data-close-modal="true">ยกเลิก</button><button class="action" type="button" id="submitLinkBtn">บันทึกลิงก์</button>'
+      );
+      requestAnimationFrame(() => document.getElementById('linkInput')?.focus());
+    });
     const upsertItem = async (kind, title, detail, url = '', status = '') => {
       const id = `${kind}-${Date.now()}`;
       const ok = await postBackend(kind === 'link' ? 'add_link' : 'create', { id, kind, title, detail, url, status });
@@ -466,14 +488,6 @@
         '<button class="action secondary" type="button" data-close-modal="true">ยกเลิก</button><button class="action" type="button" id="submitTaskBtn">บันทึกงาน</button>'
       );
       requestAnimationFrame(() => document.getElementById('taskTitleInput')?.focus());
-    });
-    document.getElementById('addDriveLink').addEventListener('click', async () => {
-      openModal(
-        'เพิ่มลิงก์ Drive',
-        '<label class="modal-field"><span>ลิงก์</span><input id="linkInput" type="url" placeholder="https://drive.google.com/..."></label><label class="modal-field"><span>ชื่อ</span><input id="linkTitleInput" type="text" placeholder="เช่น โฟลเดอร์งานหลัก"></label>',
-        '<button class="action secondary" type="button" data-close-modal="true">ยกเลิก</button><button class="action" type="button" id="submitLinkBtn">บันทึกลิงก์</button>'
-      );
-      requestAnimationFrame(() => document.getElementById('linkInput')?.focus());
     });
     document.getElementById('lineDemo').addEventListener('click', async () => {
       openModal(
@@ -509,10 +523,12 @@
       if (e.target.id === 'submitLinkBtn') {
         const url = document.getElementById('linkInput')?.value.trim();
         const title = document.getElementById('linkTitleInput')?.value.trim() || 'Google Drive link';
+        const target = document.querySelector('input[name="linkTarget"]:checked')?.value || 'work';
         if (!url) return;
-        const ok = await postBackend('add_link', { id: `link-${Date.now()}`, kind: 'link', title, url, detail: url });
+        const kind = target === 'learn' ? 'learn_link' : 'work_link';
+        const ok = await postBackend('add_link', { id: `link-${Date.now()}`, kind, target, title, url, detail: url });
         closeModal();
-        showToast(ok ? 'บันทึกลิงก์ลง Google Sheets แล้ว' : 'บันทึกลิงก์แบบเดโม');
+        showToast(ok ? `บันทึกลิงก์ไปที่${target === 'learn' ? 'การเรียนรู้' : 'งาน'}แล้ว` : 'บันทึกลิงก์แบบเดโม');
       }
       if (e.target.id === 'submitLineBtn') {
         const ok = await postBackend('summary', { title: 'ทดสอบส่งข้อความ', detail: 'LINE notification test' });
@@ -542,11 +558,20 @@
         showToast('แก้ไข Tag แล้ว');
       }
     });
-    document.getElementById('uploadImage').addEventListener('change', (e) => {
+    document.getElementById('uploadImage').addEventListener('change', async (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      postBackend('upload_file', { id: `file-${Date.now()}`, kind: 'file', title: file.name, detail: 'image upload' }).catch(() => {});
-      showToast(`อัปโหลด ${file.name} แล้ว`);
+      await postBackend('upload_file', { id: `file-${Date.now()}`, kind: 'image', title: file.name, mimeType: file.type, detail: 'image upload' }).catch(() => {});
+      showToast(`อัปโหลดรูป ${file.name} แล้ว`);
+      e.target.value = '';
+    });
+    document.getElementById('uploadVideo').addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const preview = await fileToBase64(file).catch(() => '');
+      await postBackend('upload_file', { id: `video-${Date.now()}`, kind: 'video', title: file.name, mimeType: file.type, detail: 'video upload', preview }).catch(() => {});
+      showToast(`อัปโหลดวิดีโอ ${file.name} แล้ว`);
+      e.target.value = '';
     });
     document.querySelectorAll('.task-btn').forEach(btn => btn.addEventListener('click', async () => {
       const task = btn.dataset.task;
