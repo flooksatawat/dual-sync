@@ -30,8 +30,8 @@
     .avatars{display:flex}
     .avatars span{width:42px;height:42px;border-radius:14px;border:2px solid #09101f;display:inline-block;background:linear-gradient(135deg,#4f8cff,#7c3aed)}
     .avatars span:last-child{margin-left:-12px;background:linear-gradient(135deg,#f472b6,#a855f7)}
-    .main{display:grid;gap:24px}
-    .overview-view{gap:18px;justify-items:stretch}
+    .main{display:grid;gap:24px;align-content:start}
+    .overview-view{gap:18px;justify-items:stretch;align-content:start}
     .hero{
       padding:22px;position:relative;overflow:hidden;isolation:isolate;
       background:
@@ -56,15 +56,20 @@
       filter:blur(12px);
       pointer-events:none;
     }
-    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(320px,1fr) minmax(300px,.78fr) minmax(220px,.48fr);gap:18px;align-items:stretch}
+    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(330px,1.05fr) minmax(300px,.78fr) minmax(240px,.58fr);gap:18px;align-items:stretch}
     .hero-command{min-height:auto;display:flex;flex-direction:column;justify-content:flex-start;gap:16px}
-    .hero-actions{display:grid;gap:14px;align-content:start}
-    .hero .toolbar{margin-top:0}
-    .orb-stack{position:relative;flex:1;min-height:128px;border-radius:30px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
-    .orb-stack span{position:absolute;border-radius:28px;background:linear-gradient(135deg,rgba(56,189,248,.75),rgba(217,70,239,.48));box-shadow:0 22px 60px rgba(56,189,248,.16);transform:rotate(-8deg)}
-    .orb-stack span:nth-child(1){width:42%;height:78px;left:7%;top:20px}
-    .orb-stack span:nth-child(2){width:34%;height:92px;right:13%;top:46px;background:linear-gradient(135deg,rgba(52,211,153,.68),rgba(56,189,248,.44));transform:rotate(10deg)}
-    .orb-stack span:nth-child(3){width:52%;height:54px;left:23%;bottom:24px;background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04));transform:rotate(0deg)}
+    .hero-actions{display:grid;gap:14px;align-content:start;padding:18px;border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+    .hero .toolbar{margin-top:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .hero .action{display:inline-flex;justify-content:center;align-items:center;text-align:center}
+    .sync-card{position:relative;overflow:hidden;display:grid;gap:10px;padding:16px;border-radius:28px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,rgba(56,189,248,.11),rgba(217,70,239,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+    .sync-card::before{content:"";position:absolute;right:-54px;top:-70px;width:170px;height:170px;border-radius:999px;background:radial-gradient(circle,rgba(52,211,153,.24),transparent 68%);filter:blur(2px)}
+    .sync-head,.sync-row{position:relative;z-index:1;display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .sync-head{font-size:12px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase}
+    .sync-head strong{color:#dff7ff;letter-spacing:0;text-transform:none}
+    .sync-row{padding:12px 13px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.075)}
+    .sync-row span{color:#dfe8f7;font-size:13px;font-weight:800}
+    .sync-row em{font-style:normal;color:var(--muted);font-size:12px}
+    .sync-dot{display:inline-block;width:9px;height:9px;border-radius:999px;background:var(--emerald);box-shadow:0 0 24px rgba(52,211,153,.8);vertical-align:-1px;margin-right:5px}
     .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:#cfe8ff}
     .sub{max-width:840px;color:var(--muted);font-size:16px;line-height:1.7}
     .hero-panel{
@@ -74,7 +79,7 @@
       background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.035));
       border:1px solid rgba(255,255,255,.12);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.25);
-      display:grid;gap:14px;align-content:start;min-height:auto
+      display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:auto
     }
     .hero-learning{
       align-self:stretch;
@@ -83,19 +88,31 @@
       background:linear-gradient(160deg,rgba(56,189,248,.12),rgba(217,70,239,.1) 55%,rgba(255,255,255,.03));
       border:1px solid rgba(255,255,255,.12);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.22);
-      display:grid;gap:10px;align-content:start;min-height:auto
+      display:flex;flex-direction:column;gap:10px;min-height:auto
     }
     .hero-learning h3{margin:0;font-size:15px;letter-spacing:-.02em}
     .hero-learning .learn-item{padding:12px 13px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
     .hero-learning .learn-item b{display:block;font-size:12px;margin-bottom:3px}
     .hero-learning .learn-item span{display:block;color:var(--muted);font-size:11px;line-height:1.4}
+    .learn-foot{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;padding-top:4px}
+    .learn-foot span{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#dbe6f6}
     .hero-panel .panel-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
     .hero-panel .panel-label{color:var(--muted);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
     .hero-panel .panel-value{font-size:clamp(46px,5vw,68px);font-weight:900;line-height:.95;color:var(--text);letter-spacing:-.05em}
+    .hero-progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+    .hero-progress span{display:block;height:100%;width:70%;border-radius:inherit;background:linear-gradient(90deg,var(--sky),var(--emerald));box-shadow:0 0 28px rgba(56,189,248,.35)}
     .hero-tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     .hero-tile{padding:16px;border-radius:20px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);min-height:100px;display:flex;flex-direction:column;justify-content:space-between}
     .hero-tile b{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:8px}
     .hero-tile span{font-size:32px;font-weight:900;color:var(--text);line-height:1}
+    .hero-insights{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.95fr) minmax(0,.95fr);gap:14px}
+    .insight-card{appearance:none;min-width:0;width:100%;text-align:left;color:var(--text);font:inherit;cursor:pointer;padding:16px;border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden}
+    .insight-card::after{content:"";position:absolute;right:-52px;bottom:-62px;width:150px;height:150px;border-radius:999px;background:radial-gradient(circle,rgba(56,189,248,.18),transparent 68%)}
+    .insight-kicker{display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--muted);font-size:12px}
+    .insight-kicker span:first-child{letter-spacing:.14em;text-transform:uppercase}
+    .insight-title{font-size:17px;font-weight:900;margin-top:12px;letter-spacing:-.02em}
+    .insight-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+    .insight-meta span{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#dbe6f6;font-size:12px}
     .grid4{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
     .stat-card{appearance:none;border:1px solid var(--border);color:var(--text);cursor:pointer;font:inherit;position:relative;overflow:hidden;isolation:isolate;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
     .stat-card::before{content:"";position:absolute;inset:-30% auto auto -20%;width:240px;height:240px;background:radial-gradient(circle,rgba(56,189,248,.2),transparent 68%);filter:blur(2px);z-index:-1}
@@ -159,10 +176,17 @@
     .detail-list{display:grid;gap:10px}
     .detail-item{display:flex;justify-content:space-between;gap:12px;align-items:center}
     .detail-item span{color:var(--muted);font-size:13px}
+    @media (max-width:1320px){
+      .hero-grid{grid-template-columns:minmax(280px,1fr) minmax(240px,.72fr) minmax(200px,.55fr)}
+      .hero-learning{grid-column:auto;grid-template-columns:1fr;align-items:start}
+      .hero-learning .learn-item{padding:11px 12px}
+      .hero-insights{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
     @media (max-width:1100px){
       .wrap{grid-template-columns:1fr}
       .side{display:none}
       .hero-grid{grid-template-columns:minmax(0,1fr) minmax(300px,.75fr)}
+      .hero-learning{grid-column:1/-1}
       .section,.grid4{grid-template-columns:1fr 1fr}
     }
     @media (max-width:720px){
@@ -170,11 +194,14 @@
       .hero{padding:18px 16px 16px;min-height:auto}
       .hero-grid{grid-template-columns:1fr}
       .hero-command{min-height:auto;gap:16px}
-      .orb-stack{display:none}
+      .hero .toolbar{grid-template-columns:1fr}
+      .sync-card{display:none}
+      .sync-row{padding:11px 12px}
       .panel{padding:18px}
       .mini{padding:18px;min-height:138px}
       .mini .v{font-size:42px}
-      .hero-learning{padding:16px;min-height:auto}
+      .hero-learning{padding:16px;min-height:auto;grid-template-columns:1fr}
+      .hero-learning .learn-item:nth-of-type(n+2),.learn-foot{display:none}
       .grid4,.section,.layout3{grid-template-columns:1fr}
       .section{gap:12px}
       .toolbar{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
@@ -202,6 +229,8 @@
       .hero-tile{padding:12px;border-radius:18px}
       .hero-tile{min-height:78px}
       .hero-tile span{font-size:26px}
+      .hero-insights{display:none}
+      .insight-card{padding:14px;border-radius:20px}
     }
   </style>
 </head>
@@ -236,7 +265,12 @@
                 </div>
                 <p id="toast" class="sub" style="min-height:1.2em;margin:0"></p>
               </div>
-              <div class="orb-stack" aria-hidden="true"><span></span><span></span><span></span></div>
+              <div class="sync-card">
+                <div class="sync-head"><span>Live sync</span><strong>พร้อมใช้งาน</strong></div>
+                <div class="sync-row"><span>Google Sheets</span><em>บันทึกอัตโนมัติ</em></div>
+                <div class="sync-row"><span>Google Drive</span><em>รูป / วิดีโอ / ไฟล์</em></div>
+                <div class="sync-row"><span>LINE</span><em><i class="sync-dot" aria-hidden="true"></i> แจ้งเตือน</em></div>
+              </div>
             </div>
             <div class="hero-panel">
               <div class="panel-row">
@@ -246,6 +280,7 @@
                 </div>
                 <div class="pill" style="white-space:nowrap">พร้อมซิงก์</div>
               </div>
+              <div class="hero-progress"><span></span></div>
               <div class="hero-tiles">
                 <div class="hero-tile"><b>ทำแล้ว</b><span>7</span></div>
                 <div class="hero-tile"><b>เหลือ</b><span>3</span></div>
@@ -265,6 +300,24 @@
                 <b>Mobile UI</b>
                 <span>คุมระยะ ปุ่ม และตัวเลขให้แตะง่าย อ่านง่าย และดูโปร</span>
               </div>
+              <div class="learn-foot"><span>Mindset</span><span>AI</span></div>
+            </div>
+            <div class="hero-insights">
+              <button class="insight-card stat-card" data-stat="done" type="button">
+                <div class="insight-kicker"><span>done</span><span>7 งาน</span></div>
+                <div class="insight-title">งานที่ปิดแล้ว พร้อมดูรายการทันที</div>
+                <div class="insight-meta"><span>user1</span><span>user2</span><span>Google Sheets</span></div>
+              </button>
+              <button class="insight-card stat-card" data-stat="remaining" type="button">
+                <div class="insight-kicker"><span>next</span><span>3 งาน</span></div>
+                <div class="insight-title">งานที่ต้องจัดการต่อในรอบนี้</div>
+                <div class="insight-meta"><span>todo</span><span>status</span><span>sync</span></div>
+              </button>
+              <button class="insight-card stat-card" data-stat="learn" type="button">
+                <div class="insight-kicker"><span>learn</span><span>6 หัวข้อ</span></div>
+                <div class="insight-title">สิ่งที่ต้องเรียนรู้ แยก Mindset / AI</div>
+                <div class="insight-meta"><span>Mindset</span><span>AI</span></div>
+              </button>
             </div>
           </div>
         </section>
